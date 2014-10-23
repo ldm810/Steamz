@@ -1,0 +1,19 @@
+{% extends "beers/base.html" %}
+
+{% block heading %}Logging In{% endblock %}
+{% block login %}{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<p>You are already logged in as {{user}}.
+Please <a href="{% url 'beers.views.logout' %}">log out</a> first.</p>
+{% else %}
+<p>Choose one of the following options:
+<ul>
+  <li><a href="{% url 'socialauth_begin' backend='facebook' %}?{{redirect_querystring}}">Facebook</a></li>
+  <li><a href="{% url 'socialauth_begin' backend='twitter' %}?{{redirect_querystring}}">Twitter</a></li>
+  <li><a href="{% url 'django.contrib.auth.views.login' %}?{{redirect_querystring}}">local Django</a></li>
+</ul>
+</p>
+{% endif %}
+{% endblock %}

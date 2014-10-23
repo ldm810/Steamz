@@ -1,0 +1,14 @@
+{% extends "beers/base.html" %}
+
+{% block heading %}All Drinkers{% endblock %}
+
+{% block content %}
+<p>Click on drinker below to view more information:
+<ul>
+{% for drinker in drinkers %}
+    <li><a href="{% url 'beers.views.drinker' drinker_name=drinker.name %}">{{drinker.name}}</a></li>
+{% endfor %}
+</ul>
+{{drinkers.count}} drinker{{drinkers|pluralize}} found in the database.
+</p>
+{% endblock %}

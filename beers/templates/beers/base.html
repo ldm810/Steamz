@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  {% load extras %}
+  <head>
+    <title>Django DB-Beers Example</title>
+    <meta name="description" content="A sample Django website for db-beers"/>
+    <meta name="keywords" content="django, db-beers"/>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="{{STATIC_URL}}beers/css/style.css" type="text/css" media="screen"/>
+    <script type="text/javascript" src="{{STATIC_URL}}beers/js/jquery-1.7.2.min.js"></script>
+    {% block script %}{% endblock %}
+  </head>
+  <body>
+    <h1><img src="{{STATIC_URL}}beers/img/beer.jpg" style="float:right"/> Django <a href="{% url 'beers.views.all_drinkers' %}">DB-Beers Example</a></h1>
+    <hr/>
+    <h2 id="heading">{% block heading %}{% endblock %}</h2>
+    {% if user.is_authenticated %}
+      <p>Welcome, {{user|user_greeting_name}}!<br/>
+         You are authenticated as
+         {% for auth in social_auth.associated %}
+           {{auth.user}} ({{auth.provider}}){% if forloop.last %}.{% else %}, {% endif %}
+         {% empty %}
+           {{user}} (local Django).
+         {% endfor %}
+         </p>
+    {% endif %}
+    {% block login %}
+      {% if not user.is_authenticated %}
+        <p><a href="{% url 'beers.views.login' %}?next={{request.get_full_path}}">Login</a></p>
+      {% else %}
+        <p><a href="{% url 'beers.views.logout' %}">Logout</a></p>
+      {% endif %}
+    {% endblock %}
+    <div id="content">{% block content %}{% endblock %}</div>
+    <hr/>
+  </body>
+</html>

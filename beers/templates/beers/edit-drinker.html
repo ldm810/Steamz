@@ -1,0 +1,38 @@
+{% extends "beers/base.html" %}
+
+{% block heading %}Edit Drinker Information: {{drinker.name}}{% endblock %}
+
+{% block content %}
+
+{% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %}
+
+<form method="post" action="{% url 'beers.views.edit_drinker_submit' drinker_name=drinker.name %}">
+{% csrf_token %}
+<p>
+{{drinkerForm}}
+</p>
+<p>
+Beer(s) liked:
+<!-- {{likesFormSet.as_ul}} works by itself, but isn't nice -->
+{{likesFormSet.management_form}}
+<ul>
+{% for form in likesFormSet.forms %}
+  <li>{{form}}</li>
+{% endfor %}
+</ul>
+</p>
+<p>
+Bar(s) frequented (times a week):
+<!-- {{frequentsFormSet.as_ul}} works by itself, but isn't nice -->
+{{frequentsFormSet.management_form}}
+<ul>
+{% for form in frequentsFormSet.forms %}
+  <li>{{form}}</li>
+{% endfor %}
+</ul>
+</p>
+<input type="reset" value="Reset"/>
+<input type="submit" value="Submit Update"/>
+</form>
+
+{% endblock %}
