@@ -13,53 +13,68 @@ from django.db import models
 # later), and have Django create it for you from scratch with "./manage.py
 # syncdb".
 
-class Bar(models.Model):
-    name = models.CharField(max_length=20, primary_key=True)
-    address = models.CharField(max_length=20, blank=True)
-    class Meta:
-        # Without being set, the default table name will start with the app
-        # name followed by '_'; we just want the simple table names here:
-        db_table = u'bar'
-    def __unicode__(self):
-        # Allow objects to be shown using primary key, e.g., 'The Edge'
-        # instead of 'Bar Object':
-        return self.pk
 
-class Drinker(models.Model):
-    name = models.CharField(max_length=20, primary_key=True)
-    address = models.CharField(max_length=20, blank=True)
-    class Meta:
-        db_table = u'drinker'
-    def __unicode__(self):
-        return self.pk
 
-class Frequents(models.Model):
-    drinker = models.ForeignKey(Drinker, db_column='drinker')
-    bar = models.ForeignKey(Bar, db_column='bar')
-    times_a_week = models.SmallIntegerField(null=True, blank=True)
-    class Meta:
-        db_table = u'frequents'
-        unique_together = (('drinker', 'bar'),)
+class Profile(models.Model):
+    uid = models.IntegerField(primary_key=True)
+    first_name = models.CharField(max_length=128)
+    last_name = models.CharField(max_length=128)
+    year = models.IntegerField()
+    email = models.CharField(max_length=256)
+    preference = models.CharField(max_length=1)
+    gender = models.CharField(max_length=1)
+    verified = models.CharField(max_length=1)
 
-class Beer(models.Model):
-    name = models.CharField(max_length=20, primary_key=True)
-    brewer = models.CharField(max_length=20, blank=True)
     class Meta:
-        db_table = u'beer'
-    def __unicode__(self):
-        return self.pk
+        managed = False
+        db_table = 'profile'
 
-class Serves(models.Model):
-    bar = models.ForeignKey(Bar, db_column='bar')
-    beer = models.ForeignKey(Beer, db_column='beer')
-    price = models.DecimalField(null=True, max_digits=5, decimal_places=2, blank=True)
-    class Meta:
-        db_table = u'serves'
-        unique_together = (('bar', 'beer'),)
+class Personality(models.Model):
+    uid = models.ForeignKey('Profile', db_column='uid')
+    type = models.CharField(max_length=1)
+    score = models.IntegerField()
 
-class Likes(models.Model):
-    drinker = models.ForeignKey(Drinker, db_column='drinker')
-    beer = models.ForeignKey(Beer, db_column='beer')
     class Meta:
-        db_table = u'likes'
-        unique_together = (('drinker', 'beer'),)
+        managed = False
+        db_table = 'personality'
+
+class Question(models.Model):
+    qid = models.IntegerField(primary_key=True)
+    question_text = models.CharField(max_length=256)
+    type = models.CharField(max_length=128)
+
+    class Meta:
+        managed = False
+        db_table = 'question'
+
+class Responses(models.Model):
+    uid = models.ForeignKey(Profile, db_column='uid')
+    qid = models.ForeignKey(Question, db_column='qid')
+    answer = models.CharField(max_length=1)
+
+    class Meta:
+        managed = False
+        db_table = 'responses'
+
+
+# class Match(models.Model):
+#     user1 = models.ForeignKey('Profile', db_column='uid')
+#     user2 = models.ForeignKey('Profile', db_column='uid')
+#     accept1 = models.CharField(max_length=1, blank=True)
+#     accept2 = models.CharField(max_length=1, blank=True)
+#     date_set = models.CharField(max_length=1, blank=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'match'
+
+
+# class Vote(models.Model):
+#     y_or_n = models.CharField(max_length=1)
+#     uid = models.ForeignKey(Profile, db_column='uid')
+#     user1 = models.ForeignKey(Match, db_column='user1')
+#     user2 = models.IntegerField()
+
+#     class Meta:
+#         managed = False
+#         db_table = 'vote'

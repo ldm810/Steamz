@@ -16,7 +16,7 @@ PROJ_ROOT = os.path.realpath(
                  os.path.pardir)
 )
 PROJ_NAME = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
-
+print(PROJ_NAME)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -117,4 +117,4 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 # Load any default setting values that might be modified below:
 # from django.conf.global_settings import ...
 execfile(os.path.join(PROJ_ROOT, PROJ_NAME, 'settings_social_auth.py'))
-execfile(os.path.join(PROJ_ROOT, PROJ_NAME, 'settings_beers.py'))
+execfile(os.path.join(PROJ_ROOT, PROJ_NAME, 'settings_steam.py'))

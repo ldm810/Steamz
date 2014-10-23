@@ -1,9 +1,10 @@
-from steam.models import Bar, Beer, Drinker, Frequents, Serves, Likes
+from steam.models import Profile, Personality, Question,Responses
 from django.contrib import admin
 
-admin.site.register(Bar)
-admin.site.register(Beer)
-admin.site.register(Drinker)
-admin.site.register(Frequents)
-admin.site.register(Serves)
-admin.site.register(Likes)
+admin.site.register(Profile)
+admin.site.register(Personality)
+admin.site.register(Question)
+admin.site.register(Responses)
+# admin.site.register(Match)
+# admin.site.register(Vote)
+

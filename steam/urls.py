@@ -7,8 +7,6 @@ urlpatterns = patterns('steam.views',
     url(r'^vote$', 'vote', name='vote'),
     url(r'^matches$', 'matches', name='matches'),
     url(r'^login$', 'login'),
-    url(r'^logout$', 'logout'),
-    url(r'^drinker/(?P<drinker_name>[^/]+)$', 'drinker'),
-    url(r'^edit-drinker/(?P<drinker_name>[^/]+)$', 'edit_drinker'),
-    url(r'^edit-drinker-submit/(?P<drinker_name>[^/]+)$', 'edit_drinker_submit'),
+    url(r'^logout$', 'logout')
+ 
 )
