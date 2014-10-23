@@ -15,13 +15,20 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return HttpResponseRedirect(reverse('steam.views.all_drinkers'))
+    return HttpResponseRedirect(reverse('steam.views.home'))
 
-def all_drinkers(request):
-    return render_to_response('steam/all-drinkers.html',
-        { 'drinkers' : Drinker.objects.all().order_by('name') },
+def home(request):
+    return render_to_response('steam/home.html',
         context_instance=RequestContext(request))
-
+def questions(request):
+    return render_to_response('steam/questions.html',
+        context_instance=RequestContext(request))
+def vote(request):
+    return render_to_response('steam/vote.html',
+        context_instance=RequestContext(request))
+def matches(request):
+    return render_to_response('steam/matches.html',
+        context_instance=RequestContext(request))
 def drinker(request, drinker_name):
     drinker = get_object_or_404(Drinker, pk=drinker_name)
     return render_to_response('steam/drinker.html',

@@ -1,8 +1,11 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('steam.views',
-    url(r'^$', 'all_drinkers'),
-    url(r'^all-drinkers$', 'all_drinkers', name='all_drinkers'),
+    url(r'^$', 'home'),
+    url(r'^home$', 'home', name='home'),
+    url(r'^questions$', 'questions', name='questions'),
+    url(r'^vote$', 'vote', name='vote'),
+    url(r'^matches$', 'matches', name='matches'),
     url(r'^login$', 'login'),
     url(r'^logout$', 'logout'),
     url(r'^drinker/(?P<drinker_name>[^/]+)$', 'drinker'),

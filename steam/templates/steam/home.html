@@ -1,0 +1,21 @@
+{% extends "steam/base.html" %}
+
+{% block heading %}All Drinkers{% endblock %}
+
+{% block content %}
+<p>Click on drinker below to view more information:
+<ul>
+
+    <li><a href="{% url 'steam.views.questions'  %}">Questions</a></li>
+    <li><a href="{% url 'steam.views.vote'  %}">Vote on Matches</a></li>
+	<li><a href="{% url 'steam.views.matches'  %}">View Your Matches</a></li>
+
+
+
+</ul>
+
+</p>
+{% endblock %}
+
+
+
