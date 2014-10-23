@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
-from steam.models import Profile, Personality, Question,Responses
+from steam.models import Profile
+# , Personality, Question,Responses
 from django.forms.models import ModelForm, inlineformset_factory
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
@@ -29,3 +30,5 @@ def vote(request):
 def matches(request):
     return render_to_response('steam/matches.html',
         context_instance=RequestContext(request))
+ 
+

@@ -26,7 +26,6 @@ class Profile(models.Model):
     verified = models.CharField(max_length=1)
 
     class Meta:
-        managed = False
         db_table = 'profile'
 
 class Personality(models.Model):
@@ -35,7 +34,7 @@ class Personality(models.Model):
     score = models.IntegerField()
 
     class Meta:
-        managed = False
+       
         db_table = 'personality'
 
 class Question(models.Model):
@@ -44,7 +43,7 @@ class Question(models.Model):
     type = models.CharField(max_length=128)
 
     class Meta:
-        managed = False
+       
         db_table = 'question'
 
 class Responses(models.Model):
@@ -53,7 +52,7 @@ class Responses(models.Model):
     answer = models.CharField(max_length=1)
 
     class Meta:
-        managed = False
+        
         db_table = 'responses'
 
 
