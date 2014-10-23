@@ -1,4 +1,4 @@
-from beers.models import Bar, Beer, Drinker, Frequents, Serves, Likes
+from steam.models import Bar, Beer, Drinker, Frequents, Serves, Likes
 from django.contrib import admin
 
 admin.site.register(Bar)

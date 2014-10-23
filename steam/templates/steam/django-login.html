@@ -1,4 +1,4 @@
-{% extends "beers/base.html" %}
+{% extends "steam/base.html" %}
 
 {% block heading %}Logging In Through Local Django{% endblock %}
 {% block login %}{% endblock %}
@@ -6,7 +6,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <p>You are already logged in as {{user}}.
-Please <a href="{% url 'beers.views.logout' %}">log out</a> first.</p>
+Please <a href="{% url 'steam.views.logout' %}">log out</a> first.</p>
 {% else %}
 
 {% if form.errors %}

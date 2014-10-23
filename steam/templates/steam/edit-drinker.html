@@ -1,4 +1,4 @@
-{% extends "beers/base.html" %}
+{% extends "steam/base.html" %}
 
 {% block heading %}Edit Drinker Information: {{drinker.name}}{% endblock %}
 
@@ -6,7 +6,7 @@
 
 {% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %}
 
-<form method="post" action="{% url 'beers.views.edit_drinker_submit' drinker_name=drinker.name %}">
+<form method="post" action="{% url 'steam.views.edit_drinker_submit' drinker_name=drinker.name %}">
 {% csrf_token %}
 <p>
 {{drinkerForm}}

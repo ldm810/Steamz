@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-urlpatterns = patterns('beers.views',
+urlpatterns = patterns('steam.views',
     url(r'^$', 'all_drinkers'),
     url(r'^all-drinkers$', 'all_drinkers', name='all_drinkers'),
     url(r'^login$', 'login'),

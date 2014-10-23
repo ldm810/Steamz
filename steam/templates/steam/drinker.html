@@ -1,4 +1,4 @@
-{% extends "beers/base.html" %}
+{% extends "steam/base.html" %}
 
 {% block heading %}Drinker Information: {{drinker.name}}{% endblock %}
 
@@ -6,8 +6,8 @@
 
 <p>
 Address: {{drinker.address}}<br/>
-{{beers.count}} beer{{beers|pluralize}} liked:
-{% for beer in beers %}
+{{steam.count}} beer{{steam|pluralize}} liked:
+{% for beer in steam %}
     {{beer.name}}{% if not forloop.last %},{% endif %}
 {% endfor %}<br/>
 {{frequents.count}} bar{{frequents|pluralize}} frequented:
@@ -16,7 +16,7 @@ Address: {{drinker.address}}<br/>
     ({{frequent.times_a_week}} time{% if frequent.times_a_week > 1 %}s{% endif %} a week){% if not forloop.last %},{% endif %}
 {% endfor %}<br/>
 <br/>
-<a href="{% url 'beers.views.edit_drinker' drinker_name=drinker.name %}">Edit</a> this information or see <a href="{% url 'beers.views.all_drinkers' %}">all drinkers</a>.
+<a href="{% url 'steam.views.edit_drinker' drinker_name=drinker.name %}">Edit</a> this information or see <a href="{% url 'steam.views.all_drinkers' %}">all drinkers</a>.
 </p>
 
 {% endblock %}
