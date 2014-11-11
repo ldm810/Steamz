@@ -24,9 +24,52 @@ class Profile(models.Model):
     preference = models.CharField(max_length=1)
     gender = models.CharField(max_length=1)
     verified = models.CharField(max_length=1)
+    password = models.CharField(max_length=256)
+    voter_score = models.IntegerField()
+    school_key = models.CharField(max_length=128) 
 
     class Meta:
         db_table = 'profile'
+
+class School(models.Model):
+    school_key_prime = models.ForeignKey('Profile', db_column='school_key',related_name='school_key_prime',primary_key=True)
+    school_name = models.CharField(max_length=256)
+    email_suffix = models.CharField(max_length=256)
+
+    class Meta:
+        db_table = 'school'
+
+
+class RequestFriendship(models.Model):
+    initiator = models.ForeignKey('Profile', db_column='uid1',related_name='initiator')
+    friended = models.ForeignKey('Profile', db_column='uid2',related_name='friended') 
+    accepted = models.CharField(max_length=1)
+    time_requested = models.IntegerField()
+    time_response = models.IntegerField()
+  
+    class Meta:
+        db_table = 'requestfriendship'
+        unique_together = ('initiator','friended','time_requested')
+
+
+class Friendship(models.Model):
+    friend1 = models.ForeignKey('Profile', db_column='uid1',related_name='friend1') 
+    friend2 = models.ForeignKey('Profile', db_column='uid2',related_name='friend2')
+
+    class Meta:
+        db_table = 'friendship'
+        unique_together = ('friend1','friend2')
+
+
+class Defriend(models.Model):
+    defriend_initiator = models.ForeignKey('Profile', db_column='uid1',related_name='defriend_initiator')
+    defriended = models.ForeignKey('Profile', db_column='uid2',related_name='defriended')
+    time_defriended = models.DateTimeField() 
+
+    class Meta:
+        db_table = 'defriend'
+        unique_together = ('defriend_initiator','defriended','time_defriended')
+
 
 class Personality(models.Model):
     uid = models.ForeignKey('Profile', db_column='uid')
@@ -54,26 +97,40 @@ class Responses(models.Model):
     class Meta:
         
         db_table = 'responses'
+        unique_together = ('uid','qid')
+
+class Match(models.Model):
+     user1 = models.ForeignKey('Profile', db_column='uid1',related_name='related_column_uid1')
+     user2 = models.ForeignKey('Profile', db_column='uid2',related_name='related_column_uid2' )
+     accept1 = models.CharField(max_length=1, blank=True)
+     accept2 = models.CharField(max_length=1, blank=True)
+     date_set = models.CharField(max_length=1, blank=True)
+
+     class Meta:
+         
+         db_table = 'match'
+         unique_together = ('user1','user2')
 
 
-# class Match(models.Model):
-#     user1 = models.ForeignKey('Profile', db_column='uid')
-#     user2 = models.ForeignKey('Profile', db_column='uid')
-#     accept1 = models.CharField(max_length=1, blank=True)
-#     accept2 = models.CharField(max_length=1, blank=True)
-#     date_set = models.CharField(max_length=1, blank=True)
-
-#     class Meta:
-#         managed = False
-#         db_table = 'match'
 
 
-# class Vote(models.Model):
-#     y_or_n = models.CharField(max_length=1)
-#     uid = models.ForeignKey(Profile, db_column='uid')
-#     user1 = models.ForeignKey(Match, db_column='user1')
-#     user2 = models.IntegerField()
 
-#     class Meta:
-#         managed = False
-#         db_table = 'vote'
+class Vote(models.Model):
+     y_or_n = models.CharField(max_length=1)
+     uid = models.ForeignKey(Profile, db_column='uid')
+     user1 = models.ForeignKey(Match, db_column='user1')
+     user2 = models.IntegerField()
+
+     class Meta:
+         db_table = 'vote'
+         unique_together = ('uid','user1','user2')
+
+
+class RewardsScale(models.Model):
+     voter_score = models.IntegerField(primary_key=True)
+     title = models.CharField(max_length=1)
+     
+     class Meta:
+         db_table = 'rewardsscale'
+
+
