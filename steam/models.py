@@ -26,13 +26,13 @@ class Profile(models.Model):
     verified = models.CharField(max_length=1)
     password = models.CharField(max_length=256)
     voter_score = models.IntegerField()
-    school_key = models.CharField(max_length=128) 
+    school_key = models.ForeignKey('School', db_column='school_key') 
 
     class Meta:
         db_table = 'profile'
 
 class School(models.Model):
-    school_key_prime = models.ForeignKey('Profile', db_column='school_key',related_name='school_key_prime',primary_key=True)
+    school_key_prime = models.IntegerField(primary_key=True)
     school_name = models.CharField(max_length=256)
     email_suffix = models.CharField(max_length=256)
 
