@@ -2,7 +2,11 @@
 
 
 {% block content %}
-<p>
-VOTE PAGE
-</p>
+
+John, you have voted on the following matches: <br>
+{% for v in past_votes %}
+    Person 1 : {{v.match.user1.first_name}} {{v.match.user1.last_name}} <br>
+    Person 2 : {{v.match.user2.first_name}} {{v.match.user2.last_name}} <br>
+    You voted : {{v.y_or_n}} on this pair
+{% endfor %}
 {% endblock %}
