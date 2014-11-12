@@ -41,6 +41,28 @@
 ,
 
 {
+    "model": "steam.profile",
+    "pk": 2,
+    "fields": {
+     "uid":3,
+    "first_name":"Sean ",
+    "last_name":"Green",
+    "year":2015,
+    "email":"sean.green@duke.edu",
+    "preference":"F",
+    "gender":"M",
+    "verified":"",
+    "password":"password",
+    "voter_score":"0",
+    "school_key":20
+    }
+  }
+
+
+,
+
+
+{
     "model": "steam.school",
     "pk": 1,
     "fields": {
@@ -81,6 +103,14 @@
     }
   }
 
+,
+{
+    "model": "steam.match",
+    "pk": 15,
+    "fields": {
+    "user1":2, "user2":3, "accept1":"y","accept2":"y", "date_set":"2012-04-23T18:25:43.511Z"
+    }
+  }
   ,
 
   {
@@ -88,8 +118,8 @@
     "pk":1,
     "fields": {
         "y_or_n":"y",
-        "uid":2,
-        "match":10
+        "uid":1,
+        "match":15
     }
   } ,
 
@@ -115,7 +145,7 @@
     "model": "steam.responses",
     "pk": 2,
     "fields": {
-    "uid":2, "qid":1, "answer":"B"
+    "uid":1, "qid":1, "answer":"B"
     }
   }
 ,
