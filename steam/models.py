@@ -86,7 +86,7 @@ class Question(models.Model):
 class Responses(models.Model):
     uid = models.ForeignKey('Profile', db_column='uid')
     qid = models.ForeignKey('Question', db_column='qid')
-    answer = models.CharField(max_length=1)
+    answer = models.CharField(max_length=256)
 
     class Meta:
         
@@ -122,7 +122,7 @@ class Vote(models.Model):
 
 class RewardsScale(models.Model):
      voter_score = models.IntegerField(primary_key=True)
-     title = models.CharField(max_length=1)
+     title = models.CharField(max_length=256)
      
      class Meta:
          db_table = 'rewardsscale'
