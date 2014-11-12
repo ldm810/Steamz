@@ -4,6 +4,10 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 # , Personality, Question,Responses
+from steam.models import Profile
+from django.contrib.auth import login as user_login
+from django.contrib.auth import authenticate
+from django.forms.models import ModelForm, inlineformset_factory
 from django.forms.models import ModelForm, inlineformset_factory
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
