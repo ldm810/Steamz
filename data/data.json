@@ -136,7 +136,7 @@
     "model": "steam.question",
     "pk": 1,
     "fields": {
-    "qid":1, "question_text":"What is your favorite color"
+    "qid":1, "question_text":"Do you enjoy long walks on the beach?"
     }
   }
 ,
@@ -145,7 +145,7 @@
     "model": "steam.responses",
     "pk": 2,
     "fields": {
-    "uid":1, "qid":1, "answer":"B"
+    "uid":1, "qid":1, "answer":"No, I enjoy running on the beach"
     }
   }
 ,

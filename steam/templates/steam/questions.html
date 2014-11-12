@@ -3,6 +3,11 @@
 
 {% block content %}
 <p>
-QUESTIONS
+John, you have answered the following quetions:	
+{% for q in past_questions %}
+
+{{q.qid.question_text}} <br>
+You answered: {{q.answer}}
+{% endfor %}
 </p>
 {% endblock %}
