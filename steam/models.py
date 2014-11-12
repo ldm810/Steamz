@@ -75,27 +75,17 @@ class Defriend(models.Model):
         unique_together = ('defriend_initiator','defriended','time_defriended')
 
 
-class Personality(models.Model):
-    uid = models.ForeignKey('Profile', db_column='uid')
-    type = models.CharField(max_length=1)
-    score = models.IntegerField()
-
-    class Meta:
-       
-        db_table = 'personality'
-
 class Question(models.Model):
     qid = models.IntegerField(primary_key=True)
     question_text = models.CharField(max_length=256)
-    type = models.CharField(max_length=128)
 
     class Meta:
        
         db_table = 'question'
 
 class Responses(models.Model):
-    uid = models.ForeignKey(Profile, db_column='uid')
-    qid = models.ForeignKey(Question, db_column='qid')
+    uid = models.ForeignKey('Profile', db_column='uid')
+    qid = models.ForeignKey('Question', db_column='qid')
     answer = models.CharField(max_length=1)
 
     class Meta:
@@ -121,13 +111,13 @@ class Match(models.Model):
 
 class Vote(models.Model):
      y_or_n = models.CharField(max_length=1)
-     uid = models.ForeignKey(Profile, db_column='uid')
-     user1 = models.ForeignKey(Match, db_column='user1')
-     user2 = models.IntegerField()
+     uid = models.ForeignKey('Profile', db_column='uid')
+     match = models.ForeignKey('Match', db_column='match',related_name='match')
+     #user2 = models.IntegerField()
 
      class Meta:
          db_table = 'vote'
-         unique_together = ('uid','user1','user2')
+         unique_together = ('uid','match')
 
 
 class RewardsScale(models.Model):
