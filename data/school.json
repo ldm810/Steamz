@@ -15,10 +15,21 @@
     "verified":"",
     "password":"bluedevilsrock",
     "voter_score":"0",
-    "school_key":"20"
+    "school_key":20
     }
   }
 
+,
+
+
+
+
+{
+    "model": "steam.school",
+    "pk": 1,
+    "fields": {
+    "school_key_prime":20, "school_name":"duke", "email_suffix":"duke"
+    }
+  }
 
 ]
-
