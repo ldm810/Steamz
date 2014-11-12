@@ -8,6 +8,18 @@
 <p>You are already logged in as {{user}}.
 Please <a href="{% url 'steam.views.logout' %}">log out</a> first.</p>
 {% else %}
+
+	{% if exists_error %}
+	{{ error }}
+	{% endif %}
+	
+	<form method="post" action="/steam/login">
+		{% csrf_token %}
+		Username: <input type="text" name="username"><br>
+		Password: <input type="password" name="password"><br>
+		<input type="submit">
+	</form>
+
 <p>Choose one of the following options:
 <ul>
   <li><a href="{% url 'socialauth_begin' backend='facebook' %}?{{redirect_querystring}}">Facebook</a></li>
