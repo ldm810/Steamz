@@ -11,6 +11,10 @@
 	<li><a href="{% url 'steam.views.matches'  %}">View Your Matches</a></li>
 
 
+Example on how to iterate through all the profiles:
+{% for profile in profiles %}
+    <li>{{profile.first_name}}</li>
+{% endfor %}
 
 </ul>
 

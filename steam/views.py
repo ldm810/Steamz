@@ -20,7 +20,10 @@ def logout(request):
 
 def home(request):
     return render_to_response('steam/home.html',
+        { 'profiles' : Profile.objects.all().order_by('uid') },
         context_instance=RequestContext(request))
+    # return render_to_response('steam/home.html',
+    #     context_instance=RequestContext(request))
 def questions(request):
     return render_to_response('steam/questions.html',
         context_instance=RequestContext(request))
