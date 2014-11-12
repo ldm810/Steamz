@@ -4,5 +4,13 @@
 {% block content %}
 <p>
 MATCHES PAGE
+
+{% for m in matches_for_user_1 %}
+    <li>{{m.user1.first_name}}, you have been matched with {{m.user2.first_name}}</li>
+{% endfor %}
+
+{% for m in matches_for_user_2 %}
+    <li>{{m.user1.first_name}}</li>
+{% endfor %}
 </p>
 {% endblock %}

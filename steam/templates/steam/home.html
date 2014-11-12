@@ -9,8 +9,13 @@
     <li><a href="{% url 'steam.views.questions'  %}">Questions</a></li>
     <li><a href="{% url 'steam.views.vote'  %}">Vote on Matches</a></li>
 	<li><a href="{% url 'steam.views.matches'  %}">View Your Matches</a></li>
+	<li><a href="{% url 'steam.views.friendrequests'  %}">Friend Requests</a></li>
 
 
+Example on how to iterate through all the profiles:
+{% for profile in profiles %}
+    <li>{{profile.first_name}}</li>
+{% endfor %}
 
 </ul>
 

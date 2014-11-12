@@ -41,6 +41,28 @@
 ,
 
 {
+    "model": "steam.profile",
+    "pk": 2,
+    "fields": {
+     "uid":3,
+    "first_name":"Sean ",
+    "last_name":"Green",
+    "year":2015,
+    "email":"sean.green@duke.edu",
+    "preference":"F",
+    "gender":"M",
+    "verified":"",
+    "password":"password",
+    "voter_score":"0",
+    "school_key":20
+    }
+  }
+
+
+,
+
+
+{
     "model": "steam.school",
     "pk": 1,
     "fields": {
@@ -70,22 +92,69 @@
         "time_response":"2012-04-23T18:25:43.511Z"
 
     }
-},
+} ,
+
 
 {
-    "model": "steam.friendship",
-    "pk": 2,
+    "model": "steam.match",
+    "pk": 10,
     "fields": {
-    "friend1":1, "friend2":1
+    "user1":1, "user2":2, "accept1":"y","accept2":"n", "date_set":"2012-04-23T18:25:43.511Z"
+    }
+  }
+
+,
+{
+    "model": "steam.match",
+    "pk": 15,
+    "fields": {
+    "user1":2, "user2":3, "accept1":"y","accept2":"y", "date_set":"2012-04-23T18:25:43.511Z"
+    }
+  }
+  ,
+
+  {
+    "model": "steam.vote",
+    "pk":1,
+    "fields": {
+        "y_or_n":"y",
+        "uid":1,
+        "match":15
+    }
+  } ,
+
+  {
+    "model": "steam.defriend",
+    "pk": 3,
+    "fields": {
+    "defriend_initiator":1, "defriended":2, "time_defriended":"2013-05-23T18:25:43.511Z"
     }
   }
 ,
 
 {
-    "model": "steam.match",
+    "model": "steam.question",
+    "pk": 1,
+    "fields": {
+    "qid":1, "question_text":"Do you enjoy long walks on the beach?"
+    }
+  }
+,
+
+{
+    "model": "steam.responses",
     "pk": 2,
     "fields": {
-    "user1":1, "user2":2, "accept1":"y","accept2":"n", "date_set":"2012-04-23T18:25:43.511Z"
+    "uid":1, "qid":1, "answer":"No, I enjoy running on the beach"
+    }
+  }
+,
+
+{
+    "model": "steam.rewardsscale",
+    "pk": 1,
+    "fields": {
+    "voter_score":1, "title":"A"
     }
   }
 

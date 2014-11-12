@@ -1,0 +1,24 @@
+[
+
+
+{
+    "model": "steam.profile",
+    "pk": 1,
+    "fields": {
+     "uid":1,
+    "first_name":"John ",
+    "last_name":"Doe",
+    "year":2015,
+    "email":"john.doe@duke.edu",
+    "preference":"F",
+    "gender":"M",
+    "verified":"",
+    "password":"bluedevilsrock",
+    "voter_score":"0",
+    "school_key":"20"
+    }
+  }
+
+
+]
+
