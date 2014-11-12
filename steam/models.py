@@ -39,6 +39,10 @@ class School(models.Model):
     class Meta:
         db_table = 'school'
 
+class AutoDateTimeField(models.DateTimeField):
+    def pre_save(self, model_instance, add):
+        return datetime.datetime.now()
+
 
 class RequestFriendship(models.Model):
     initiator = models.ForeignKey('Profile', db_column='uid1',related_name='initiator')
@@ -104,7 +108,7 @@ class Match(models.Model):
      user2 = models.ForeignKey('Profile', db_column='uid2',related_name='related_column_uid2' )
      accept1 = models.CharField(max_length=1, blank=True)
      accept2 = models.CharField(max_length=1, blank=True)
-     date_set = models.CharField(max_length=1, blank=True)
+     date_set = models.DateTimeField()
 
      class Meta:
          
