@@ -1,0 +1,15 @@
+[
+
+
+{
+    "model": "steam.school",
+    "pk": 1,
+    "fields": {
+    "school_key_prime":"",
+    "school_name ":"Duke ",
+
+    "email_suffix":"duke"
+    }
+  }
+
+]

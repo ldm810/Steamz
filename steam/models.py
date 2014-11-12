@@ -44,8 +44,8 @@ class RequestFriendship(models.Model):
     initiator = models.ForeignKey('Profile', db_column='uid1',related_name='initiator')
     friended = models.ForeignKey('Profile', db_column='uid2',related_name='friended') 
     accepted = models.CharField(max_length=1)
-    time_requested = models.IntegerField()
-    time_response = models.IntegerField()
+    time_requested = models.DateTimeField()
+    time_response = models.DateTimeField()
   
     class Meta:
         db_table = 'requestfriendship'
