@@ -1,0 +1,13 @@
+{% extends "steam/base.html" %}
+
+
+{% block content %}
+<p>
+John, you have initiated a friendship with : <br>
+{% for f in friendrequests %}
+
+{{f.friended.first_name}}  {{f.friended.last_name}}<br>
+Response: {{f.accepted}}
+{% endfor %}
+</p>
+{% endblock %}

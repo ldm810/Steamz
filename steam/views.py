@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
-from steam.models import Profile,Match,Vote,Responses
+from steam.models import Profile,Match,Vote,Responses, RequestFriendship
 # , Personality, Question,Responses
 from django.forms.models import ModelForm, inlineformset_factory
 from django.contrib.auth import logout as auth_logout
@@ -22,8 +22,12 @@ def home(request):
     return render_to_response('steam/home.html',
         { 'profiles' : Profile.objects.all().order_by('uid') },
         context_instance=RequestContext(request))
-    # return render_to_response('steam/home.html',
-    #     context_instance=RequestContext(request))
+def friendrequests(request):
+    friendrequests =RequestFriendship.objects.filter(initiator=1)
+    return render_to_response('steam/friendrequests.html',
+        { 'friendrequests' : friendrequests },
+        context_instance=RequestContext(request))
+   
 def questions(request):
     past_questions = Responses.objects.filter(uid=1)
     return render_to_response('steam/questions.html',
