@@ -51,7 +51,7 @@ class RegistrationForm(UserCreationForm):
             existing_match2 = Match.objects.filter(user2=person).filter(user1=new_person)
             if (len(existing_match1) == 0 and len(existing_match2) ==0):
                 new_match = Match(user1=person,user2=new_person)  
-                
+                new_match.save()
 
     # matches_for_user_2 = Match.objects.filter(user2=1)
         print 'potential matches', potential_matches

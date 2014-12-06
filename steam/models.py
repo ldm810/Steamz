@@ -96,7 +96,7 @@ class Match(models.Model):
      user2 = models.ForeignKey('Profile', db_column='uid2',related_name='related_column_uid2' )
      accept1 = models.CharField(max_length=1, blank=True)
      accept2 = models.CharField(max_length=1, blank=True)
-     date_set = models.DateTimeField()
+    
 
      class Meta:
          
