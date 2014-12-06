@@ -1,13 +1,59 @@
 {% extends "steam/base.html" %}
 
-
 {% block content %}
+
+<h1> Meet some friends, {{profile.first_name}}!</h1>
+
+{% if msg_exists %}
+
+{{ msg }}
+
+{% else %}
+<h2> Do you know {{ lucky_one.first_name }} {{ lucky_one.last_name }}?</h2>
+
+
+	<form method="post" action="/steam/process_like">
+		{% csrf_token %}
+		<input type="submit" value="Request Friendship">
+		<input type="hidden" name="profile" value="{{lucky_one.user.id}}">
+	</form>
+
+{% endif %}
+
+<h1> Pending Friend Requests </h1>
+{% for r in requested_me %}
+{% if r.accepted != "T" %}
+{{ r.initiator.first_name }} {{ r.initiator.last_name }}
+	<form method="post" action="/steam/process_friend_accept">
+		{% csrf_token %}
+		<input type="submit" value="Accept Request!">
+		<input type="hidden" name="profile" value="{{r.initiator.user.id}}">
+		<input type="hidden" name="request" value="{{r.id}}">
+	</form>
+	<form method="post" action="/steam/process_friend_reject">
+		{% csrf_token %}
+		<input type="submit" value="Reject Request">
+		<input type="hidden" name="profile" value="{{r.initiator.user.id}}">
+		<input type="hidden" name="request" value="{{r.id}}">
+	</form>
+	<br>
+{% endif %}
+{% endfor %}
+
+<h1> List of People I've Friended </h1>
+{% for r in my_requests %}
+{{ r.friended.first_name }} {{ r.friended.last_name }}<br>
+{% endfor %}
+
+
+<!--
 <p>
-John, you have initiated a friendship with : <br>
+John, you have initiated a friendship with :<br>
 {% for f in friendrequests %}
 
 {{f.friended.first_name}}  {{f.friended.last_name}}<br>
 Response: {{f.accepted}}
 {% endfor %}
 </p>
+-->
 {% endblock %}

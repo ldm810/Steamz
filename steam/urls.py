@@ -11,6 +11,11 @@ urlpatterns = patterns('steam.views',
     url(r'^vote$', 'vote', name='vote'),
     url(r'^matches$', 'matches', name='matches'),
     url(r'^login$', 'login'),
-    url(r'^logout$', 'logout')
- 
+    url(r'^logout$', 'logout'),
+    url(r'^process_like$', 'process_like'),
+    url(r'^process_friend_accept$', 'process_friend_accept'),
+    url(r'^process_friend_reject$', 'process_friend_reject'),
+    url(r'^friends$', 'friends'),
+    url(r'^remove_friend$', 'remove_friend'),
+
 )
