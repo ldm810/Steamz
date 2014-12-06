@@ -2,168 +2,35 @@
 
 
 {
+
     "model": "steam.profile",
     "pk": 1,
     "fields": {
-     "uid":1,
-    "first_name":"John ",
-    "last_name":"Doe",
-    "year":2015,
-    "email":"john.doe@duke.edu",
-    "preference":"F",
-    "gender":"M",
-    "verified":"",
-    "password":"bluedevilsrock",
-    "voter_score":"0",
-    "school_key":20
-    }
-  }
-,
-
-{
-    "model": "steam.profile",
-    "pk": 2,
-    "fields": {
-     "uid":2,
-    "first_name":"Jane ",
-    "last_name":"Thomas",
-    "year":2015,
-    "email":"jane.thomas@duke.edu",
-    "preference":"M",
-    "gender":"F",
-    "verified":"",
-    "password":"password",
-    "voter_score":"0",
-    "school_key":20
-    }
-  }
-
-,
-
-{
-    "model": "steam.profile",
-    "pk": 2,
-    "fields": {
-     "uid":3,
-    "first_name":"Sean ",
-    "last_name":"Green",
-    "year":2015,
-    "email":"sean.green@duke.edu",
-    "preference":"F",
-    "gender":"M",
-    "verified":"",
-    "password":"password",
-    "voter_score":"0",
-    "school_key":20
-    }
-  }
-
-
-,
-
-
-{
-    "model": "steam.school",
-    "pk": 1,
-    "fields": {
-    "school_key_prime":20, "school_name":"duke", "email_suffix":"duke"
-    }
-  }
-  ,
-
-{
-
-    "model": "steam.friendship",
-    "pk":2,
-    "fields": {
-        "friend1":1, "friend2":2
+    "first_name": "abigail",
+    "last_name": "lin",
+    "year": 2015,
+    "email": "abigail.lin@duke.edu",
+    "preference": "M",
+    "gender": "F",
+    "voter_score": 0
     }
 }
 ,
 
-{ 
-    "model": "steam.requestfriendship",
-    "pk":1,
-    "fields": {
-        "initiator":1,
-        "friended":2,
-        "accepted":"Y",
-        "time_requested":"2012-04-23T18:25:43.511Z",
-        "time_response":"2012-04-23T18:25:43.511Z"
-
-    }
-} ,
-
-
 {
-    "model": "steam.match",
-    "pk": 10,
-    "fields": {
-    "user1":1, "user2":2, "accept1":"y","accept2":"n", "date_set":"2012-04-23T18:25:43.511Z"
-    }
-  }
 
-,
-{
-    "model": "steam.match",
-    "pk": 15,
-    "fields": {
-    "user1":2, "user2":3, "accept1":"y","accept2":"y", "date_set":"2012-04-23T18:25:43.511Z"
-    }
-  }
-  ,
-
-  {
-    "model": "steam.vote",
-    "pk":1,
-    "fields": {
-        "y_or_n":"y",
-        "uid":1,
-        "match":15
-    }
-  } ,
- {
-    "model": "steam.vote",
-    "pk":1,
-    "fields": {
-        "y_or_n":"y",
-        "uid":3,
-        "match":10
-    }
-  } ,
-  {
-    "model": "steam.defriend",
-    "pk": 3,
-    "fields": {
-    "defriend_initiator":1, "defriended":2, "time_defriended":"2013-05-23T18:25:43.511Z"
-    }
-  }
-,
-
-{
-    "model": "steam.question",
+    "model": "auth.User",
     "pk": 1,
     "fields": {
-    "qid":1, "question_text":"Do you enjoy long walks on the beach?"
+    "username": "abigail", 
+    "first_name": "abigail",
+    "last_name": "lin",
+    "password": "password",
+    "email": "abigail.lin@duke.edu"
     }
-  }
-,
+}
 
-{
-    "model": "steam.responses",
-    "pk": 2,
-    "fields": {
-    "uid":1, "qid":1, "answer":"No, I enjoy running on the beach"
-    }
-  }
-,
 
-{
-    "model": "steam.rewardsscale",
-    "pk": 1,
-    "fields": {
-    "voter_score":1, "title":"A"
-    }
-  }
 
 ]
+

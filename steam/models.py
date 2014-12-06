@@ -25,6 +25,11 @@ class Profile(models.Model):
     gender = models.CharField(max_length=1)
     voter_score = models.IntegerField()
     
+    def create(cls, newuser):
+        profile = cls(user=user,first_name=first_name, last_name=last_name,
+            year=year, email=email, preference=preference, gender=gender,
+            voter_score=voter_score)
+        return profile
     
 
     class Meta:
