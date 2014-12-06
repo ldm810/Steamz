@@ -25,6 +25,11 @@ class Profile(models.Model):
     gender = models.CharField(max_length=1)
     voter_score = models.IntegerField()
     
+    def create(cls, newuser):
+        profile = cls(user=user,first_name=first_name, last_name=last_name,
+            year=year, email=email, preference=preference, gender=gender,
+            voter_score=voter_score)
+        return profile
     
 
     class Meta:
@@ -91,7 +96,7 @@ class Match(models.Model):
      user2 = models.ForeignKey('Profile', db_column='uid2',related_name='related_column_uid2' )
      accept1 = models.CharField(max_length=1, blank=True)
      accept2 = models.CharField(max_length=1, blank=True)
-     date_set = models.DateTimeField()
+    
 
      class Meta:
          

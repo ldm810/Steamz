@@ -1,7 +1,7 @@
 from django import forms            
 from django.contrib.auth.models import User   # fill in custom user info then save it 
 from django.contrib.auth.forms import UserCreationForm 
-from steam.models import Profile
+from steam.models import Profile,Match
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required = True)
@@ -9,7 +9,9 @@ class RegistrationForm(UserCreationForm):
     last_name = forms.CharField(required = True)
     year = forms.IntegerField(required = True)
     preference = forms.CharField(max_length=1, required=True)
-    gender = forms.CharField(max_length=1, required=True)
+    CHOICES = (('f', 'Female',), ('m', 'Male',))
+    gender = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+    preference = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     #school_key = forms.CharField(max_length=256, required=False)
 
 
@@ -42,5 +44,33 @@ class RegistrationForm(UserCreationForm):
         if commit:
             new_person.save()
 
+        potential_matches = Profile.objects.filter(gender=user.preference).filter(preference=user.gender).exclude(user=user)
+        for person in potential_matches:
+            
+            existing_match1 = Match.objects.filter(user1=person).filter(user2=new_person)
+            existing_match2 = Match.objects.filter(user2=person).filter(user1=new_person)
+            if (len(existing_match1) == 0 and len(existing_match2) ==0):
+                new_match = Match(user1=person,user2=new_person)  
+                new_match.save()
+
+    # matches_for_user_2 = Match.objects.filter(user2=1)
+        print 'potential matches', potential_matches
         return user
+
+
+
+class MatchesForm(forms.Form):
+    CHOICES = (('y', 'Yes',), ('n', 'No',))
+    accept1 = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES, help_text="Would you like to accept?")
+
+
+    # An inline class to provide additional information on the form.
+    class Meta:
+        widgets = {'tag': forms.HiddenInput()}
+    #     # Provide an association between the ModelForm and a model
+    #     model = Match
+
+
+
+
 

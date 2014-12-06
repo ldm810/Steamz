@@ -14,6 +14,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from steam.forms import RegistrationForm
 from datetime import datetime, date, time
+from steam.forms import RegistrationForm,MatchesForm
 
 VOTES_THRESHOLD = 1
 
@@ -199,24 +200,40 @@ def process_friend_reject(request):
     return redirect('/steam/friendrequests')
 
 def matches(request):
-
-    matches_for_user_1 = Match.objects.filter(user1=1)
-    matches_for_user_2 = Match.objects.filter(user2=1)
-    final_matches_1 = []
-    final_matches_2 = []
-    for m in matches_for_user_1:
-        num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
-        if (num_votes >= VOTES_THRESHOLD):
-            final_matches_1.append(m)
-    for m in matches_for_user_2:
-        num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
-        if (num_votes >= VOTES_THRESHOLD):
-            final_matches_2.append(m)
-        
+    # if request.method == 'POST':
+    #     form = MatchesForm(request.POST)
+    #     if form.is_valid():
+    #         print form.cleaned_data
+    #         # form.save()
+    #         return HttpResponseRedirect(reverse(('steam.views.home')))
+    # else:
+    #     form = MatchesForm()
     return render_to_response('steam/matches.html',
-        { 'final_matches_1' : final_matches_1,
-        'final_matches_2' : final_matches_2},
+        {},
+        context_instance=RequestContext(request))
+    # matches_for_user_1 = Match.objects.filter(user1=1)
+    # matches_for_user_2 = Match.objects.filter(user2=1)
+    # final_matches_1 = []
+    # final_matches_2 = []
+    # for m in matches_for_user_1:
+    #     num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
+    #     if (num_votes >= VOTES_THRESHOLD):
+    #         final_matches_1.append(m)
+    # for m in matches_for_user_2:
+    #     num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
+    #     if (num_votes >= VOTES_THRESHOLD):
+    #         final_matches_2.append(m)
+        
+    # return render_to_response('steam/matches.html',
+    #     { 'final_matches_1' : final_matches_1,
+    #     'final_matches_2' : final_matches_2},
 
     
-        context_instance=RequestContext(request))
+    #     context_instance=RequestContext(request))
 
+def go(request):
+    # print "hello"
+    # print request
+    print "accept1"
+    print request.POST.get("accept1", "")
+    return render_to_response('steam/matches.html',{ },context_instance=RequestContext(request))
