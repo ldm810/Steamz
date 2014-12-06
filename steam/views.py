@@ -10,6 +10,7 @@ from django.forms.models import ModelForm, inlineformset_factory
 from django.forms.models import ModelForm, inlineformset_factory
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+VOTES_THRESHOLD = 1
 
 def login(request):
     if request.method == 'POST':
@@ -68,10 +69,20 @@ def vote(request):
 def matches(request):
     matches_for_user_1 = Match.objects.filter(user1=1)
     matches_for_user_2 = Match.objects.filter(user2=1)
-  
+    final_matches_1 = []
+    final_matches_2 = []
+    for m in matches_for_user_1:
+        num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
+        if (num_votes >= VOTES_THRESHOLD):
+            final_matches_1.append(m)
+    for m in matches_for_user_2:
+        num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
+        if (num_votes >= VOTES_THRESHOLD):
+            final_matches_2.append(m)
+        
     return render_to_response('steam/matches.html',
-        { 'matches_for_user_1' : matches_for_user_1,
-        'matches_for_user_2':matches_for_user_2},
+        { 'final_matches_1' : final_matches_1,
+        'final_matches_2' : final_matches_2},
     
         context_instance=RequestContext(request))
 

@@ -122,7 +122,15 @@
         "match":15
     }
   } ,
-
+ {
+    "model": "steam.vote",
+    "pk":1,
+    "fields": {
+        "y_or_n":"y",
+        "uid":3,
+        "match":10
+    }
+  } ,
   {
     "model": "steam.defriend",
     "pk": 3,
