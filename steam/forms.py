@@ -42,6 +42,17 @@ class RegistrationForm(UserCreationForm):
         if commit:
             new_person.save()
 
+        potential_matches = Profile.objects.filter(gender=user.preference).filter(preference=user.gender).exclude(user=user)
+        for person in potential_matches:
+            
+            existing_match1 = Match.objects.filter(user1=person).filter(user2=new_person)
+            existing_match2 = Match.objects.filter(user2=person).filter(user1=new_person)
+            if (len(existing_match1) == 0 and len(existing_match2) ==0):
+                new_match = Match(user1=person,user2=new_person)  
+                
+
+    # matches_for_user_2 = Match.objects.filter(user2=1)
+        print 'potential matches', potential_matches
         return user
 
 class MatchesForm(forms.Form):
