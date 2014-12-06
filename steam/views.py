@@ -22,7 +22,10 @@ def login(request):
         if user is not None:
             if user.is_active:
                 user_login(request, user)
-                return HttpResponse("Successful login")
+                return render_to_response('steam/login.html',
+                {
+                },
+                context_instance=RequestContext(request))
 
             else:
                 return HttpResponse("Your account has been disabled")
