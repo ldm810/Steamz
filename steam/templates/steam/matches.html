@@ -13,4 +13,27 @@ MATCHES PAGE
     <li>{{m.user1.first_name}}</li>
 {% endfor %}
 </p>
+
+<form action="go" method="post">
+ {% csrf_token %}
+Would you like to accept this match?
+	<div class="radio">
+  <label>
+
+    <input type="radio" name="accept1"  value="y" > Yes
+
+  </label>
+    <label>
+
+    <input type="radio" name="accept1"  value="n" > No
+    
+  </label>
+</div>
+ <input type="submit" value="Submit"> 
+<!-- 	<input type="hidden" name="title" value="title test">
+ 
+  {{ form.as_p }}
+   <input type='hidden' name="tag" value=4354>
+  <input type="submit" value="Register"> -->
+</form>
 {% endblock %}
