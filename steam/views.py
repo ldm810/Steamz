@@ -231,7 +231,7 @@ def matches(request):
         context_instance=RequestContext(request))
 
 def go(request):
-<<<<<<< HEAD
+
 
     response = request.POST.get("accept1", "")
     matchID = request.POST.get("match", "")
@@ -243,10 +243,3 @@ def go(request):
         match = Match.objects.filter(id=matchID).update(accept2=response)
       
     return render_to_response('steam/matches.html',{ },context_instance=RequestContext(request))
-=======
-    # print "hello"
-    # print request
-    print "accept1"
-    print request.POST.get("accept1", "")
-    return render_to_response('steam/matches.html',{ },context_instance=RequestContext(request))
->>>>>>> 37877729727dcd13f6ff0979fe57732aeda7e790
