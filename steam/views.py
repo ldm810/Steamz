@@ -231,6 +231,27 @@ def matches(request):
     
     #     context_instance=RequestContext(request))
 
+def friends(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    all_friends = Friendship.objects.filter(friend1=profile)
+    all_friends2 = Friendship.objects.filter(friend2=profile)
+
+    friendless = False
+    if len(all_friends) == 0 and len(all_friends2) == 0:
+        friendless= True
+
+    return render_to_response(
+        'steam/friends.html', {'friendless':friendless, 'all_friends':all_friends, 'all_friends2':all_friends2},RequestContext(request))
+
+def remove_friend(request):
+    user = request.user
+    friendship_id = request.POST.get('friendship')
+    friendship = Friendship.objects.get(id=friendship_id)
+    friendship.delete()
+
+    return redirect('/steam/friends')
+
 def go(request):
     # print "hello"
     # print request
