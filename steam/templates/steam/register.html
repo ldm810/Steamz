@@ -1,0 +1,17 @@
+{% extends "steam/base.html" %}
+
+{% block heading %}User Registration{% endblock %}
+{% block login %}{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<p>You are already logged in as {{user}}.
+Please <a href="{% url 'steam.views.logout' %}">log out</a> first.</p>
+{% else %}
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Register">
+</form>
+{% endif %}
+{% endblock %}

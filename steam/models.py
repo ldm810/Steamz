@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # If you have already designed a SQL database schema (a situation that Django
 # calls "legacy databases"), you can create it first in a database with SQL,
@@ -14,30 +15,22 @@ from django.db import models
 # syncdb".
 
 
-
 class Profile(models.Model):
-    uid = models.IntegerField(primary_key=True)
+    user = models.OneToOneField(User, primary_key=True)
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
     year = models.IntegerField()
     email = models.CharField(max_length=256)
     preference = models.CharField(max_length=1)
     gender = models.CharField(max_length=1)
-    verified = models.CharField(max_length=1)
-    password = models.CharField(max_length=256)
     voter_score = models.IntegerField()
-    school_key = models.ForeignKey('School', db_column='school_key') 
+    
+    
 
     class Meta:
         db_table = 'profile'
 
-class School(models.Model):
-    school_key_prime = models.IntegerField(primary_key=True)
-    school_name = models.CharField(max_length=256)
-    email_suffix = models.CharField(max_length=256)
 
-    class Meta:
-        db_table = 'school'
 
 class AutoDateTimeField(models.DateTimeField):
     def pre_save(self, model_instance, add):
