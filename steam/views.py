@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
-from steam.models import Profile,Match,Vote,Responses, RequestFriendship
+from steam.models import Profile,Match,Vote,Responses, RequestFriendship, Question
 from django.contrib.auth import login as user_login
 from django.contrib.auth import authenticate
 from django.forms.models import ModelForm, inlineformset_factory
@@ -11,6 +11,7 @@ from django.forms.models import ModelForm, inlineformset_factory
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from steam.forms import RegistrationForm,MatchesForm
+import random
 
 VOTES_THRESHOLD = 1
 
@@ -76,10 +77,52 @@ def friendrequests(request):
         context_instance=RequestContext(request))
    
 def questions(request):
-    # past_questions = Responses.objects.filter(uid=1)
+    
+    all_responses = Responses.objects.filter(user=request.user)
+
+    all_questions = Question.objects.all()
+
+
+    if len(all_responses) == 0:
+        random_q = random.choice(all_questions)
+    else:
+
+        pick_question = True
+        while pick_question:
+        
+            for response in all_responses:
+
+                random_q =  random.choice(all_questions)   
+                if random_q.qid == response.qid:
+                    random_q = random.choice(all_questions)
+                else:
+                    pick_question = False
+
+        
+
+
+
     return render_to_response('steam/questions.html',
-        { },
+        { 
+
+        'past_questions': all_responses,
+        'new_question': random_q
+
+
+        },
         context_instance=RequestContext(request))
+
+def answer(request):
+    
+    print "Response"
+    y_or_n = request.POST.get("respond", "")
+    question_id = request.POST.get("question", "")
+    profile = Profile.objects.filter(user=request.user)[0]
+    question = Question.objects.filter(qid=question_id)[0]
+    response = Responses(user=profile, qid=question, answer=y_or_n)
+    response.save()
+    return render_to_response('steam/questions.html',{ },context_instance=RequestContext(request))
+
 
 def vote(request):
     # past_votes = Vote.objects.filter(uid=1)

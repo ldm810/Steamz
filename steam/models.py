@@ -82,14 +82,14 @@ class Question(models.Model):
         db_table = 'question'
 
 class Responses(models.Model):
-    uid = models.ForeignKey('Profile', db_column='uid')
+    user = models.ForeignKey('Profile', db_column='user')
     qid = models.ForeignKey('Question', db_column='qid')
     answer = models.CharField(max_length=256)
 
     class Meta:
         
         db_table = 'responses'
-        unique_together = ('uid','qid')
+        unique_together = ('user','qid')
 
 class Match(models.Model):
      user1 = models.ForeignKey('Profile', db_column='uid1',related_name='related_column_uid1')
