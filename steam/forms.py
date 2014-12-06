@@ -9,7 +9,9 @@ class RegistrationForm(UserCreationForm):
     last_name = forms.CharField(required = True)
     year = forms.IntegerField(required = True)
     preference = forms.CharField(max_length=1, required=True)
-    gender = forms.CharField(max_length=1, required=True)
+    CHOICES = (('f', 'Female',), ('m', 'Male',))
+    gender = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+    preference = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     #school_key = forms.CharField(max_length=256, required=False)
 
 
@@ -54,6 +56,8 @@ class RegistrationForm(UserCreationForm):
     # matches_for_user_2 = Match.objects.filter(user2=1)
         print 'potential matches', potential_matches
         return user
+
+
 
 class MatchesForm(forms.Form):
     CHOICES = (('y', 'Yes',), ('n', 'No',))
