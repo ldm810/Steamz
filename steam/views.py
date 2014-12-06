@@ -95,13 +95,14 @@ def matches(request):
     #         return HttpResponseRedirect(reverse(('steam.views.home')))
     # else:
     #     form = MatchesForm()
-    return render_to_response('steam/matches.html',
-        {},
-        context_instance=RequestContext(request))
-    # matches_for_user_1 = Match.objects.filter(user1=1)
-    # matches_for_user_2 = Match.objects.filter(user2=1)
-    # final_matches_1 = []
-    # final_matches_2 = []
+    # return render_to_response('steam/matches.html',
+    #     {},
+    #     context_instance=RequestContext(request))
+    matches_for_user_1 = Match.objects.filter(user1=request.user).exclude(accept1='y').exclude(accept1='n')
+    matches_for_user_2 = Match.objects.filter(user2=request.user).exclude(accept2='y').exclude(accept2='n')
+    print "matches",matches_for_user_1,matches_for_user_2
+    final_matches_1 = []
+    final_matches_2 = []
     # for m in matches_for_user_1:
     #     num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
     #     if (num_votes >= VOTES_THRESHOLD):
@@ -111,16 +112,20 @@ def matches(request):
     #     if (num_votes >= VOTES_THRESHOLD):
     #         final_matches_2.append(m)
         
-    # return render_to_response('steam/matches.html',
-    #     { 'final_matches_1' : final_matches_1,
-    #     'final_matches_2' : final_matches_2},
-
-    
-    #     context_instance=RequestContext(request))
+    return render_to_response('steam/matches.html',
+        { 'final_matches_1' : matches_for_user_1,
+        'final_matches_2' : matches_for_user_2},
+        context_instance=RequestContext(request))
 
 def go(request):
-    # print "hello"
-    # print request
-    print "accept1"
-    print request.POST.get("accept1", "")
+
+    response = request.POST.get("accept1", "")
+    matchID = request.POST.get("match", "")
+    userPos = request.POST.get("userPos", "")
+    
+    if (userPos == "1" ):
+        match = Match.objects.filter(id=matchID).update(accept1=response)
+    if (userPos=="2"):
+        match = Match.objects.filter(id=matchID).update(accept2=response)
+      
     return render_to_response('steam/matches.html',{ },context_instance=RequestContext(request))
