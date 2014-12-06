@@ -1,7 +1,7 @@
 from django import forms            
 from django.contrib.auth.models import User   # fill in custom user info then save it 
 from django.contrib.auth.forms import UserCreationForm 
-from steam.models import Profile
+from steam.models import Profile,Match
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required = True)
@@ -43,4 +43,16 @@ class RegistrationForm(UserCreationForm):
             new_person.save()
 
         return user
+
+class MatchesForm(forms.Form):
+    CHOICES = (('y', 'Yes',), ('n', 'No',))
+    accept1 = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES, help_text="Would you like to accept?")
+
+
+    # An inline class to provide additional information on the form.
+    class Meta:
+        widgets = {'tag': forms.HiddenInput()}
+    #     # Provide an association between the ModelForm and a model
+    #     model = Match
+
 
