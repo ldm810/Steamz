@@ -1,0 +1,29 @@
+{% extends "steam/base.html" %}
+
+{% block heading %}All My Friends{% endblock %}
+
+{% block content %}
+<h1>All My Friends</h1>
+
+{% if friendless %}
+You currently have no friends =(
+{% endif %}
+
+{% for friend in all_friends %}
+{{ friend.friend1.first_name }} {{ friend.friend1.last_name }}<br>
+
+<form method="post" action="/steam/remove_friend">
+	{% csrf_token %}
+	<input type="submit" value="Remove Friend">
+	<input type="hidden" name="friendship" value="{{friend.id}}">
+</form><br>
+{% endfor %}
+
+{% for friend in all_friends2 %}
+{{ friend.friend1.first_name }} {{ friend.friend1.last_name }}<br>
+{% endfor %}
+
+{% endblock %}
+
+
+
