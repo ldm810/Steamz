@@ -206,6 +206,8 @@ def vote(request):
     user1Questions = []
     user2Questions = []
     no_matches = False
+    user1NoResponses = False
+    user2NoResponses = False
     no_previous_votes  = False
     for m in matches:
        
@@ -224,13 +226,19 @@ def vote(request):
     if (len(matchToVoteOn)!=0):
         user1Questions = Responses.objects.filter(user=matchToVoteOn[0].user1)
         user2Questions = Responses.objects.filter(user=matchToVoteOn[0].user2)
+        if (len(user1Questions) == 0):
+            user1NoResponses = True
+        if (len(user2Questions)==0):
+            user2NoResponses = True
     else:
         no_matches = True
     if (len(previous_votes) == 0):
         no_previous_votes = True
     return render_to_response('steam/vote.html',
         { 'match': matchToVoteOn, 'previous_votes':previous_votes, 
-        'user1Questions':user1Questions,'user2Questions':user2Questions, 'no_matches' : no_matches,'no_previous_votes':no_previous_votes},
+        'user1Questions':user1Questions,'user2Questions':user2Questions, 
+        'no_matches' : no_matches,'no_previous_votes':no_previous_votes,
+        'user1NoResponses':user1NoResponses,'user2NoResponses':user2NoResponses},
         context_instance=RequestContext(request))
 
 def process_like(request):

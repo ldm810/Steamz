@@ -21,6 +21,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=128)
     year = models.IntegerField()
     email = models.CharField(max_length=256)
+    school = models.CharField(max_length=256)
     preference = models.CharField(max_length=1)
     gender = models.CharField(max_length=1)
     voter_score = models.IntegerField()
