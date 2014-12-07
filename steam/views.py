@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.template import RequestContext
 
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from steam.models import Profile,Match,Vote,Responses, RequestFriendship, Friendship
+from steam.models import Profile,Match,Vote,Responses, Question, RequestFriendship, Friendship
 
 from django.contrib.auth import login as user_login
 from django.contrib.auth import authenticate
@@ -127,25 +127,31 @@ def friendrequests(request):
    
 def questions(request):
     
+    current_user = request.user
+    print current_user.first_name
+
+
     all_responses = Responses.objects.filter(user=request.user)
+    for r in all_responses:
+        print r.qid.question_text
 
     all_questions = Question.objects.all()
 
+    random_q = random.choice(all_questions)
 
     if len(all_responses) == 0:
         random_q = random.choice(all_questions)
     else:
 
-        pick_question = True
-        while pick_question:
-        
-            for response in all_responses:
-
-                random_q =  random.choice(all_questions)   
-                if random_q.qid == response.qid:
-                    random_q = random.choice(all_questions)
-                else:
-                    pick_question = False
+        response_IDs = []
+        for response in all_responses:
+            response_IDs.append(response.qid.qid)
+        get_question = True
+        while get_question:
+            random_q = random.choice(all_questions) 
+            test_qid = random_q.qid
+            if test_qid not in response_IDs:
+                get_question = False
 
         
 
