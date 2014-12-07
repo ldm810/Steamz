@@ -12,11 +12,16 @@ You answered: {{q.answer}}
 </p>
 
 
+{% if msg_exists %}
 
+[[ msg ]]
+
+{% else %}
 
 <p>
 
 Here is a new question:
+
 <form action="answer" method="post">
 	{% csrf_token %}
 	{{new_question.question_text}}:  
@@ -28,6 +33,7 @@ Here is a new question:
 
 </p>
 
+{% endif %}
 
 
 

@@ -126,21 +126,24 @@ def friendrequests(request):
         context_instance=RequestContext(request))
    
 def questions(request):
-    
-    current_user = request.user
-    print current_user.first_name
 
 
     all_responses = Responses.objects.filter(user=request.user)
-    for r in all_responses:
-        print r.qid.question_text
+    all_questions = Question.objects.all()    
 
-    all_questions = Question.objects.all()
+    #num_questions = len(all_questions) - len(all_responses)
 
+    #msg=""
+    #msg_exists = False
+
+    #if num_questions < 1:
+    #    msg = "No more questions are left to answer!"
+    #    msg_exists = True
+
+    current_user = request.user
     random_q = random.choice(all_questions)
 
-    if len(all_responses) == 0:
-        random_q = random.choice(all_questions)
+
     else:
 
         response_IDs = []
@@ -152,16 +155,17 @@ def questions(request):
             test_qid = random_q.qid
             if test_qid not in response_IDs:
                 get_question = False
-
-        
-
+    #        if num_questions == 0:
+    #            get_question = False
 
 
     return render_to_response('steam/questions.html',
         { 
 
         'past_questions': all_responses,
-        'new_question': random_q
+        'new_question': random_q,
+     #   'msg': msg,
+     #   'msg_exists': msg_exists
 
 
         },
@@ -176,7 +180,11 @@ def answer(request):
     question = Question.objects.filter(qid=question_id)[0]
     response = Responses(user=profile, qid=question, answer=y_or_n)
     response.save()
-    return render_to_response('steam/questions.html',{ },context_instance=RequestContext(request))
+
+    return redirect('home')
+
+    #return redirect('steam/questions.html', {}, context_instance=RequestContext(request))
+
 
 
 def vote(request):
