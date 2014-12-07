@@ -308,9 +308,13 @@ def matches(request):
         if (num_votes >= VOTES_THRESHOLD):
             final_matches_2.append(m)
         
+    accepted_for_user_1 = Match.objects.filter(user1=request.user).filter(accept1='y').filter(accept1='y')
+    accepted_for_user_2 = Match.objects.filter(user2=request.user).filter(accept2='y').filter(accept2='y')
     return render_to_response('steam/matches.html',
         { 'final_matches_1' : final_matches_1,
-        'final_matches_2' : final_matches_2},
+        'final_matches_2' : final_matches_2,
+        'accepted_for_user_1':accepted_for_user_1,
+        'accepted_for_user_2':accepted_for_user_2},
         context_instance=RequestContext(request))
 
 def friends(request):
