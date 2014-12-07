@@ -15,6 +15,14 @@
     "fields": {
     "qid":2, "question_text":"Do you enjoy long walks on the beach?"
     }
+  },
+
+  {
+    "model": "steam.question",
+    "pk": 3,
+    "fields": {
+    "qid":3, "question_text":"Do you like computer science?"
+    }
   }
 
 ]
