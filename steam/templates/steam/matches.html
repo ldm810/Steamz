@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-md-1"></div>
 		<div class="well well-sm col-md-4">
-			You have been matched with {{m.user1.first_name}} {{m.user1.last_name}}
+			You have been matched with {{m.user2.first_name}} {{m.user2.last_name}}
 			<form action="go" method="post">
 				{% csrf_token %}
 				Would you like to accept this match?
@@ -29,6 +29,7 @@
 				<input type="hidden" name="match" value={{m.id}}>
 				<input type="hidden" name="userPos" value=2>
 				<input type="submit" value="Submit"> 
+
 			</form>
 		</div>
 	</div>
@@ -69,9 +70,3 @@
 {% endblock %}
 
 
-<!-- 	<input type="hidden" name="title" value="title test">
- 
-  {{ form.as_p }}
-   <input type='hidden' name="tag" value=4354>
-  <input type="submit" value="Register">
-</form> -->
