@@ -131,7 +131,7 @@ def questions(request):
     all_responses = Responses.objects.filter(user=request.user)
     all_questions = Question.objects.all()    
 
-    #num_questions = len(all_questions) - len(all_responses)
+    num_questions = len(all_questions) - len(all_responses)
 
     #msg=""
     #msg_exists = False
@@ -141,8 +141,12 @@ def questions(request):
     #    msg_exists = True
 
     current_user = request.user
+
+
     random_q = random.choice(all_questions)
 
+    if len(all_responses) == 0:
+        random_q = random.choice(all_questions)
 
     else:
 
@@ -155,8 +159,8 @@ def questions(request):
             test_qid = random_q.qid
             if test_qid not in response_IDs:
                 get_question = False
-    #        if num_questions == 0:
-    #            get_question = False
+            #if num_questions == 0:
+            #    get_question = False
 
 
     return render_to_response('steam/questions.html',
