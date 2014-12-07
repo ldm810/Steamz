@@ -180,9 +180,20 @@ def answer(request):
 
 
 def vote(request):
-    # past_votes = Vote.objects.filter(uid=1)
+    # potential_votes = Vote.objects.filter(uid=1)
+    matches = Match.objects.exclude(user1=request.user).exclude(user2=request.user)
+    print 'matches',matches
+    matchToVoteOn = []
+    for m in matches:
+        person = Profile.objects.filter(user=request.user)
+        votes = Vote.objects.filter(match=m).filter(uid=person)
+        if (len(votes) == 0):
+            matchToVoteOn.append(m)
+            print 'match to vote on ' , m
+            break 
+    # print 'MATCH TO VOTE ON',matchToVoteOn.id
     return render_to_response('steam/vote.html',
-        { },
+        { 'match': matchToVoteOn},
         context_instance=RequestContext(request))
 
 def process_like(request):
@@ -315,3 +326,17 @@ def go(request):
         match = Match.objects.filter(id=matchID).update(accept2=response)
       
     return render_to_response('steam/matches.html',{ },context_instance=RequestContext(request))
+
+def vote_on_match(request):
+
+
+   
+    matchID = request.POST.get("match", "")
+    vote = request.POST.get("vote", "")
+    uid = Profile.objects.filter(user=request.user)[0]
+    match = Match.objects.filter(id=matchID)[0]
+    new_vote = Vote(y_or_n=vote,match=match,uid=uid)
+    new_vote.save()
+    print 'new_vote',new_vote
+      
+    return render_to_response('steam/vote.html',{ },context_instance=RequestContext(request))

@@ -3,10 +3,28 @@
 
 {% block content %}
 
-John, you have voted on the following matches: <br>
-{% for v in past_votes %}
-    Person 1 : {{v.match.user1.first_name}} {{v.match.user1.last_name}} <br>
-    Person 2 : {{v.match.user2.first_name}} {{v.match.user2.last_name}} <br>
-    You voted : {{v.y_or_n}} on this pair
+
+{% for v in match %}
+	Please vote on the following match: <br>
+    Person 1 : {{v.user1.first_name}} {{v.user1.last_name}} <br>
+    Person 2 : {{v.user2.first_name}} {{v.user2.last_name}} <br>
+    <form action="vote_on_match" method="post">
+		{% csrf_token %}
+		
+		<div class="radio">
+			<label>
+
+				<input type="radio" name="vote"  value="y" > Yes
+
+			</label>
+			<label>
+
+				<input type="radio" name="vote"  value="n" > No
+				
+			</label>
+		</div>
+		<input type="hidden" name="match" value={{v.id}}>
+		<input type="submit" value="Submit"> 
+	</form>
 {% endfor %}
 {% endblock %}
