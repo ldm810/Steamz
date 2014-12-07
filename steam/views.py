@@ -129,7 +129,7 @@ def questions(request):
     
     current_user = request.user
     print current_user.first_name
-
+    print "?????"
 
     all_responses = Responses.objects.filter(user=request.user)
     for r in all_responses:
@@ -139,25 +139,43 @@ def questions(request):
 
     random_q = random.choice(all_questions)
 
+    msg = ""
+    msg_exists = False
+
+    if len(all_responses) == len(all_questions):
+        msg = "You have no more questions to answer!"
+        msg_exists = True
+
+
     if len(all_responses) == 0:
         random_q = random.choice(all_questions)
     else:
-
+        count = 0
         response_IDs = []
         for response in all_responses:
             response_IDs.append(response.qid.qid)
         get_question = True
         while get_question:
+            count += 1
+            print count
             random_q = random.choice(all_questions) 
             test_qid = random_q.qid
             if test_qid not in response_IDs:
                 get_question = False
 
+            if len(all_responses) == len(all_questions):
+
+                get_question = False
+            
+
+
     return render_to_response('steam/questions.html',
         { 
 
         'past_questions': all_responses,
-        'new_question': random_q
+        'new_question': random_q,
+        'msg':msg, 
+        'msg_exists':msg_exists
 
 
         },

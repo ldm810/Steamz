@@ -8,11 +8,17 @@ You have answered the following questions:
 
 {{q.qid.question_text}} <br>
 You answered: {{q.answer}}
+<br>
+<br>
 {% endfor %}
 </p>
 
 
+{% if msg_exists %}
 
+{{ msg }}
+
+{% else %}
 
 <p>
 
@@ -28,10 +34,8 @@ Here is a new question:
 
 </p>
 
-
-
-
-
-
-
+{% endif %}
 {% endblock %}
+
+
+
