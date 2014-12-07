@@ -1,40 +1,67 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  {% load extras %}
-  <head>
-    <title>Steamz</title>
-    <meta name="description" content="A sample Django website for db-steam"/>
-    <meta name="keywords" content="django, db-steam"/>
-    <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
-    <link rel="stylesheet" href="{{STATIC_URL}}steam/css/style.css" type="text/css" media="screen"/>
-    <script type="text/javascript" src="{{STATIC_URL}}steam/js/jquery-1.7.2.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+{% load extras %}
+<head>
+  <title>Steamz</title>
+  <meta name="description" content="A sample Django website for db-steam"/>
+  <meta name="keywords" content="django, db-steam"/>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+  <link rel="stylesheet" href="{{STATIC_URL}}steam/css/style.css" type="text/css" media="screen"/>
+  <script type="text/javascript" src="{{STATIC_URL}}steam/js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
-    
-    {% block script %}{% endblock %}
-  </head>
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+
+  {% block script %}{% endblock %}
+</head>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+
+      </button>
+      <a class="navbar-brand" href="{% url 'steam.views.home'  %}">Steamz</a>
+
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+        <li><a href="{% url 'steam.views.questions'  %}">Questions</a></li>
+        <li><a href="{% url 'steam.views.vote'  %}">Vote on Matches</a></li>
+        <li><a href="{% url 'steam.views.matches'  %}">View Your Matches</a></li>
+        <li><a href="{% url 'steam.views.friendrequests'  %}">Friend Requests</a></li>
+        <li><a href="{% url 'steam.views.friends'  %}">Friends List</a></li>
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
   <body>
     <h1><img src="{{STATIC_URL}}steam/img/beer.jpg" style="float:right"/> Home <a href="{% url 'steam.views.home' %}">Steamz</a></h1>
     <hr/>
     <h2 id="heading">{% block heading %}{% endblock %}</h2>
     {% if user.is_authenticated %}
-      <p>Welcome, {{user|user_greeting_name}}!<br/>
-         You are authenticated as
-         {% for auth in social_auth.associated %}
-           {{auth.user}} ({{auth.provider}}){% if forloop.last %}.{% else %}, {% endif %}
-         {% empty %}
-           {{user}} (local Django).
-         {% endfor %}
-         </p>
-    {% endif %}
-    {% block login %}
-      {% if not user.is_authenticated %}
-        <p><a href="{% url 'steam.views.login' %}?next={{request.get_full_path}}">Login</a></p>
-      {% else %}
-        <p><a href="{% url 'steam.views.logout' %}">Logout</a></p>
-      {% endif %}
-    {% endblock %}
-    <div id="content">{% block content %}{% endblock %}</div>
-    <hr/>
-  </body>
-</html>
+    <p>Welcome, {{user|user_greeting_name}}!<br/>
+     You are authenticated as
+     {% for auth in social_auth.associated %}
+     {{auth.user}} ({{auth.provider}}){% if forloop.last %}.{% else %}, {% endif %}
+     {% empty %}
+     {{user}} (local Django).
+     {% endfor %}
+   </p>
+   {% endif %}
+   {% block login %}
+   {% if not user.is_authenticated %}
+   <p><a href="{% url 'steam.views.login' %}?next={{request.get_full_path}}">Login</a></p>
+   {% else %}
+
+   {% endif %}
+   {% endblock %}
+   <div id="content">{% block content %}{% endblock %}</div>
+   <hr/>
+ </body>
+ <footer><p><a href="{% url 'steam.views.logout' %}">Logout</a></p></footer>
+ </html>

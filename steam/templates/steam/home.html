@@ -1,25 +1,25 @@
 {% extends "steam/base.html" %}
 
-{% block heading %}All Drinkers{% endblock %}
+
 
 {% block content %}
-<p>Click on drinker below to view more information:
-<ul>
+<div class="container">
+<h2>Select an item below to get started</h2>
+	<ul>
+		<div class="list-group">
+			<a class="list-group-item" href="{% url 'steam.views.questions'  %}">Questions</a>
+			<a class="list-group-item" href="{% url 'steam.views.vote'  %}">Vote on Matches</a>
+			<a class="list-group-item" href="{% url 'steam.views.matches'  %}">View Your Matches</a>
+			<a class="list-group-item" href="{% url 'steam.views.friendrequests'  %}">Friend Requests</a>
+			<a  class="list-group-item" class="list-group-item"href="{% url 'steam.views.friends'  %}">Friends List</a>
 
-    <li><a href="{% url 'steam.views.questions'  %}">Questions</a></li>
-    <li><a href="{% url 'steam.views.vote'  %}">Vote on Matches</a></li>
-	<li><a href="{% url 'steam.views.matches'  %}">View Your Matches</a></li>
-	<li><a href="{% url 'steam.views.friendrequests'  %}">Friend Requests</a></li>
-	<li><a href="{% url 'steam.views.friends'  %}">Friends List</a></li>
+		</div>
 
-Example on how to iterate through all the profiles:
-<!-- {% for profile in profiles %} -->
-    <!-- <li>{{profile.first_name}}</li> -->
-<!-- {% endfor %} -->
 
-</ul>
+	</ul>
 
-</p>
+
+</div>
 {% endblock %}
 
 

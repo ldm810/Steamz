@@ -130,11 +130,13 @@ def questions(request):
 
 def vote(request):
     # potential_votes = Vote.objects.filter(uid=1)
+    person = Profile.objects.filter(user=request.user)
+    previous_votes = Vote.objects.filter(uid=person)
     matches = Match.objects.exclude(user1=request.user).exclude(user2=request.user)
     print 'matches',matches
     matchToVoteOn = []
     for m in matches:
-        person = Profile.objects.filter(user=request.user)
+       
         votes = Vote.objects.filter(match=m).filter(uid=person)
         if (len(votes) == 0):
             matchToVoteOn.append(m)
@@ -142,7 +144,7 @@ def vote(request):
             break 
     # print 'MATCH TO VOTE ON',matchToVoteOn.id
     return render_to_response('steam/vote.html',
-        { 'match': matchToVoteOn},
+        { 'match': matchToVoteOn, 'previous_votes':previous_votes},
         context_instance=RequestContext(request))
 
 def process_like(request):
@@ -227,18 +229,18 @@ def matches(request):
     print "matches",matches_for_user_1,matches_for_user_2
     final_matches_1 = []
     final_matches_2 = []
-    # for m in matches_for_user_1:
-    #     num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
-    #     if (num_votes >= VOTES_THRESHOLD):
-    #         final_matches_1.append(m)
-    # for m in matches_for_user_2:
-    #     num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
-    #     if (num_votes >= VOTES_THRESHOLD):
-    #         final_matches_2.append(m)
+    for m in matches_for_user_1:
+        num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
+        if (num_votes >= VOTES_THRESHOLD):
+            final_matches_1.append(m)
+    for m in matches_for_user_2:
+        num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
+        if (num_votes >= VOTES_THRESHOLD):
+            final_matches_2.append(m)
         
     return render_to_response('steam/matches.html',
-        { 'final_matches_1' : matches_for_user_1,
-        'final_matches_2' : matches_for_user_2},
+        { 'final_matches_1' : final_matches_1,
+        'final_matches_2' : final_matches_2},
         context_instance=RequestContext(request))
 
 def friends(request):

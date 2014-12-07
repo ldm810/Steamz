@@ -2,8 +2,14 @@
 
 
 {% block content %}
-
-
+<h2>Previous Votes</h2>
+{% for v in previous_votes %}
+	
+    Person 1 : {{v.match.user1.first_name}} {{v.match.user1.last_name}} <br>
+    Person 2 : {{v.match.user2.first_name}} {{v.match.user2.last_name}} <br>
+   
+{% endfor %}
+<hr>
 {% for v in match %}
 	Please vote on the following match: <br>
     Person 1 : {{v.user1.first_name}} {{v.user1.last_name}} <br>
@@ -27,4 +33,6 @@
 		<input type="submit" value="Submit"> 
 	</form>
 {% endfor %}
+
+
 {% endblock %}
