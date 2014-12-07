@@ -3,8 +3,10 @@ import random
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.template import RequestContext
+
 from django.shortcuts import render_to_response, get_object_or_404, redirect
-from steam.models import Profile,Match,Vote,Responses, RequestFriendship, Friendship
+from steam.models import Profile,Match,Vote,Responses, Question, RequestFriendship, Friendship
+
 from django.contrib.auth import login as user_login
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -15,6 +17,7 @@ from django.contrib.auth.decorators import login_required
 from steam.forms import RegistrationForm
 from datetime import datetime, date, time
 from steam.forms import RegistrationForm,MatchesForm
+import random
 
 VOTES_THRESHOLD = 1
 
@@ -123,10 +126,58 @@ def friendrequests(request):
         context_instance=RequestContext(request))
    
 def questions(request):
-    # past_questions = Responses.objects.filter(uid=1)
+    
+    current_user = request.user
+    print current_user.first_name
+
+
+    all_responses = Responses.objects.filter(user=request.user)
+    for r in all_responses:
+        print r.qid.question_text
+
+    all_questions = Question.objects.all()
+
+    random_q = random.choice(all_questions)
+
+    if len(all_responses) == 0:
+        random_q = random.choice(all_questions)
+    else:
+
+        response_IDs = []
+        for response in all_responses:
+            response_IDs.append(response.qid.qid)
+        get_question = True
+        while get_question:
+            random_q = random.choice(all_questions) 
+            test_qid = random_q.qid
+            if test_qid not in response_IDs:
+                get_question = False
+
     return render_to_response('steam/questions.html',
-        { },
+        { 
+
+        'past_questions': all_responses,
+        'new_question': random_q
+
+
+        },
         context_instance=RequestContext(request))
+
+def answer(request):
+    
+    print "Response"
+    y_or_n = request.POST.get("respond", "")
+    question_id = request.POST.get("question", "")
+    profile = Profile.objects.filter(user=request.user)[0]
+    question = Question.objects.filter(qid=question_id)[0]
+    response = Responses(user=profile, qid=question, answer=y_or_n)
+    response.save()
+
+    return redirect('home')
+
+    #return redirect('steam/questions.html', {}, context_instance=RequestContext(request))
+
+
 
 def vote(request):
     # potential_votes = Vote.objects.filter(uid=1)
