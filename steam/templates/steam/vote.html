@@ -5,7 +5,9 @@
 <div class="row">
 	<h2 class="col-md-4">Previous Votes</h2>
 </div>
-
+{% if no_previous_votes %}
+	You have not voted before
+	{% endif %}
 {% for v in previous_votes %}
 <div class="row">
 	<div class="col-md-1"></div>
@@ -29,7 +31,12 @@
 <hr>
 <div class="row">
 	<h2 class="col-md-4">Vote on the Match Below!</h2>
+
+	
 </div>
+{% if no_matches %}
+	You have nothing to vote on =(
+	{% endif %}
 <div class="row">
 	{% for v in match %}
 	<div class="col-md-1"></div>

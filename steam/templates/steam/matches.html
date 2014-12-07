@@ -3,7 +3,9 @@
 
 {% block content %}
 <h2>Your Finalized Matches</h2>
-
+{% if no_accepts %}
+You have no finalized matches =(
+{% endif %}
 
 {% for m in accepted_for_user_1%}
 <div class="row">
@@ -35,7 +37,9 @@
 
 
 <h2>Vote on Your Matches</h2>
-
+{% if no_matches %}
+You have no matches to vote on =(
+{% endif %}
 
 {% for m in final_matches_1 %}
 <div class="row">
