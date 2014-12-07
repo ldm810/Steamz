@@ -189,7 +189,14 @@ def vote(request):
     for m in matches:
        
         votes = Vote.objects.filter(match=m).filter(uid=person)
-        if (len(votes) == 0):
+        friends =[]
+        friends.extend(Friendship.objects.filter(friend1=person).filter(friend2=m.user1))
+        friends.extend(Friendship.objects.filter(friend2=person).filter(friend1=m.user1))
+
+        friends.extend(Friendship.objects.filter(friend1=person).filter(friend2=m.user2))
+        friends.extend(Friendship.objects.filter(friend2=person).filter(friend1=m.user2))
+        print "friends",friends
+        if (len(votes) == 0 and len(friends) !=0):
             matchToVoteOn.append(m)
             print 'match to vote on ' , m
             break 
@@ -264,17 +271,7 @@ def process_friend_reject(request):
     return redirect('/steam/friendrequests')
 
 def matches(request):
-    # if request.method == 'POST':
-    #     form = MatchesForm(request.POST)
-    #     if form.is_valid():
-    #         print form.cleaned_data
-    #         # form.save()
-    #         return HttpResponseRedirect(reverse(('steam.views.home')))
-    # else:
-    #     form = MatchesForm()
-    # return render_to_response('steam/matches.html',
-    #     {},
-    #     context_instance=RequestContext(request))
+
     matches_for_user_1 = Match.objects.filter(user1=request.user).exclude(accept1='y').exclude(accept1='n')
     matches_for_user_2 = Match.objects.filter(user2=request.user).exclude(accept2='y').exclude(accept2='n')
     print "matches",matches_for_user_1,matches_for_user_2
