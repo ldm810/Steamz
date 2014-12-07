@@ -202,8 +202,9 @@ def vote(request):
     person = Profile.objects.filter(user=request.user)
     previous_votes = Vote.objects.filter(uid=person)
     matches = Match.objects.exclude(user1=request.user).exclude(user2=request.user)
-    print 'matches',matches
     matchToVoteOn = []
+    user1Questions = []
+    user2Questions = []
     for m in matches:
        
         votes = Vote.objects.filter(match=m).filter(uid=person)
@@ -218,9 +219,12 @@ def vote(request):
             matchToVoteOn.append(m)
             print 'match to vote on ' , m
             break 
-    # print 'MATCH TO VOTE ON',matchToVoteOn.id
+    if (len(matchToVoteOn)!=0):
+        user1Questions = Responses.objects.filter(user=matchToVoteOn[0].user1)
+        user2Questions = Responses.objects.filter(user=matchToVoteOn[0].user2)
     return render_to_response('steam/vote.html',
-        { 'match': matchToVoteOn, 'previous_votes':previous_votes},
+        { 'match': matchToVoteOn, 'previous_votes':previous_votes, 
+        'user1Questions':user1Questions,'user2Questions':user2Questions},
         context_instance=RequestContext(request))
 
 def process_like(request):
