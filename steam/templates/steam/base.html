@@ -7,6 +7,7 @@
   <meta name="keywords" content="django, db-steam"/>
   <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
   <link rel="stylesheet" href="{{STATIC_URL}}steam/css/style.css" type="text/css" media="screen"/>
+ 
   <script type="text/javascript" src="{{STATIC_URL}}steam/js/jquery-1.7.2.min.js"></script>
   <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
@@ -41,12 +42,12 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  <body>
+  <body class="back">
 
     {% if user.is_authenticated %}
 
     {% endif %}
-    
+
     <div id="content">{% block content %}{% endblock %}</div>
     <hr/>
   </body>

@@ -1,5 +1,9 @@
 body {
     color: black;
-    background: white;
+     background-image:url("coffee.jpg");
     font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.back {
+	 background-image:url("coffee.jpg");
 }
