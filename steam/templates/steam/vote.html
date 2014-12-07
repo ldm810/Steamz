@@ -2,11 +2,83 @@
 
 
 {% block content %}
+<div class="row">
+	<h2 class="col-md-4">Previous Votes</h2>
+</div>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="well well-sm col-md-4">
+		{% for v in previous_votes %}
 
-John, you have voted on the following matches: <br>
-{% for v in past_votes %}
-    Person 1 : {{v.match.user1.first_name}} {{v.match.user1.last_name}} <br>
-    Person 2 : {{v.match.user2.first_name}} {{v.match.user2.last_name}} <br>
-    You voted : {{v.y_or_n}} on this pair
+		Person 1 : {{v.match.user1.first_name}} {{v.match.user1.last_name}} <br>
+		Person 2 : {{v.match.user2.first_name}} {{v.match.user2.last_name}} <br>
+		You voted :
+		{% if v.y_or_n == 'y'  %}
+		Yes
+		{% else %}
+		{% if v.y_or_n == 'n' %}
+
+		No
+		{% endif %} 
+		{% endif %}
+		{% endfor %}
+	</div>
+</div>
+</div>
+<hr>
+<div class="row">
+	<h2 class="col-md-4">Vote on the Match Below!</h2>
+</div>
+<div class="row">
+	{% for v in match %}
+	<div class="col-md-1"></div>
+	<div class="well well-sm col-md-4">
+		<h3>Person 1 </h3>
+		<h4>{{v.user1.first_name}} {{v.user1.last_name}} </h4><br>
+		{{v.user1.first_name}} answered these questions:
+		{% for question in user1Questions %}
+		<li>	{{question.qid.question_text}}  <b>{{question.answer}} </b></li>
+
+		{% endfor %}
+	</div>
+
+	<div class="col-md-1"></div>
+	<div class="well well-sm col-md-4">
+		<h3>Person 2 </h3>
+		<h4>{{v.user2.first_name}} {{v.user2.last_name}} </h4><br>
+		{{v.user2.first_name}} answered these questions:
+		{% for question in user2Questions %}
+		<li>	{{question.qid.question_text}}  <b>{{question.answer}}</b> </li>
+
+		{% endfor %}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class=" well well-sm col-md-6">
+		Do you think these two people should grab a cup of coffee together?
+		<form action="vote_on_match" method="post">
+			{% csrf_token %}
+
+			<div class="radio">
+				<label>
+
+					<input type="radio" name="vote"  value="y" > Yes
+
+				</label>
+				<label>
+
+					<input type="radio" name="vote"  value="n" > No
+
+				</label>
+			</div>
+			<input type="hidden" name="match" value={{v.id}}>
+			<input type="submit" value="Submit"> 
+		</form>
+	</div>
+</div>
 {% endfor %}
+</div>
+</div>
+
 {% endblock %}

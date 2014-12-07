@@ -3,11 +3,39 @@
 
 {% block content %}
 <p>
-John, you have answered the following quetions:	
+You have answered the following questions:	
 {% for q in past_questions %}
 
 {{q.qid.question_text}} <br>
 You answered: {{q.answer}}
+<br>
+<br>
 {% endfor %}
 </p>
+
+
+{% if msg_exists %}
+
+{{ msg }}
+
+{% else %}
+
+<p>
+
+Here is a new question:
+<form action="answer" method="post">
+	{% csrf_token %}
+	{{new_question.question_text}}:  
+	<input type="hidden" name="question" value={{new_question.qid}}>
+	Yes: <input type="radio" name="respond" value="Yes" />
+	No: <input type="radio" name="respond" value="No" />
+	<input type="submit" value="Submit">
+</form>
+
+</p>
+
+{% endif %}
 {% endblock %}
+
+
+

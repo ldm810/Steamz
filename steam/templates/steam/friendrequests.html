@@ -9,7 +9,7 @@
 {{ msg }}
 
 {% else %}
-<h2> Do you know {{ lucky_one.first_name }} {{ lucky_one.last_name }}?</h2>
+<p> Do you know {{ lucky_one.first_name }} {{ lucky_one.last_name }}?</p>
 
 
 	<form method="post" action="/steam/process_like">
@@ -20,7 +20,7 @@
 
 {% endif %}
 
-<h1> Pending Friend Requests </h1>
+<h4> Pending Friend Requests </h4>
 {% for r in requested_me %}
 {% if r.accepted != "T" %}
 {{ r.initiator.first_name }} {{ r.initiator.last_name }}
@@ -40,7 +40,7 @@
 {% endif %}
 {% endfor %}
 
-<h1> List of People I've Friended </h1>
+<h4> List of People I've Friended </h4>
 {% for r in my_requests %}
 {{ r.friended.first_name }} {{ r.friended.last_name }}<br>
 {% endfor %}
