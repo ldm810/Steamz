@@ -21,6 +21,12 @@ You currently have no friends =(
 
 {% for friend in all_friends2 %}
 {{ friend.friend1.first_name }} {{ friend.friend1.last_name }}<br>
+
+<form method="post" action="/steam/remove_friend">
+	{% csrf_token %}
+	<input type="submit" value="Remove Friend">
+	<input type="hidden" name="friendship" value="{{friend.id}}">
+</form><br>
 {% endfor %}
 
 {% endblock %}
