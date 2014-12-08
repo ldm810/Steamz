@@ -419,7 +419,7 @@ def suggest_friends(request):
         f_friends_list = find_my_friends(f)
 
         for fr in f_friends_list:
-            if fr not in my_friends_list:
+            if fr not in my_friends_list and fr != profile:
                 possible_friends.append(fr)
 
     possible_friends = set(possible_friends)
