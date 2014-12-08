@@ -20,7 +20,7 @@ from steam.forms import RegistrationForm,MatchesForm
 
 import random
 
-VOTES_THRESHOLD = 1
+VOTES_THRESHOLD = 3
 
 
 def login(request):
@@ -332,8 +332,8 @@ def matches(request):
         if (num_votes >= VOTES_THRESHOLD):
             final_matches_2.append(m)
         
-    accepted_for_user_1 = Match.objects.filter(user1=request.user).filter(accept1='y').filter(accept1='y')
-    accepted_for_user_2 = Match.objects.filter(user2=request.user).filter(accept2='y').filter(accept2='y')
+    accepted_for_user_1 = Match.objects.filter(user1=request.user).filter(accept1='y').filter(accept2='y')
+    accepted_for_user_2 = Match.objects.filter(user2=request.user).filter(accept1='y').filter(accept2='y')
     if (len(accepted_for_user_2) == 0 and len(accepted_for_user_1)==0):
         no_accepts = True
     if (len(final_matches_1) == 0 and len(final_matches_2)==0):
