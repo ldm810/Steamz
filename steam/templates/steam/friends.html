@@ -10,7 +10,7 @@ You currently have no friends =(
 {% endif %}
 
 {% for friend in all_friends %}
-{{ friend.friend1.first_name }} {{ friend.friend1.last_name }}<br>
+{{ friend.friend2.first_name }} {{ friend.friend2.last_name }}<br>
 
 <form method="post" action="/steam/remove_friend">
 	{% csrf_token %}

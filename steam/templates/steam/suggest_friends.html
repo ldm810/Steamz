@@ -1,0 +1,21 @@
+{% extends "steam/base.html" %}
+
+{% block heading %}Suggested Friends{% endblock %}
+
+{% block content %}
+<h1>All My Friends</h1>
+
+{{ msg }}
+{% for friend in possible_friends %}
+
+{{ friend.first_name }} {{ friend.last_name }}
+
+<form method="post" action="/steam/process_like">
+		{% csrf_token %}
+		<input type="submit" value="Request Friendship">
+		<input type="hidden" name="profile" value="{{friend.user.id}}">
+</form>
+
+{% endfor %}
+
+{% endblock %}

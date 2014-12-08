@@ -18,5 +18,8 @@ urlpatterns = patterns('steam.views',
     url(r'^process_friend_reject$', 'process_friend_reject'),
     url(r'^friends$', 'friends'),
     url(r'^remove_friend$', 'remove_friend'),
+    url(r'^remove_friend$', 'remove_friend'),
+    url(r'^suggest_friends$', 'suggest_friends'),
+    url(r'^profile$', 'profile'),
 
 )

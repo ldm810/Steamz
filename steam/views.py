@@ -17,6 +17,7 @@ from django.contrib.auth.decorators import login_required
 from steam.forms import RegistrationForm
 from datetime import datetime, date, time
 from steam.forms import RegistrationForm,MatchesForm
+
 import random
 
 VOTES_THRESHOLD = 1
@@ -67,6 +68,7 @@ def register(request):
         { 'form': form, },
         context_instance=RequestContext(request))
 
+@login_required
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect(reverse('steam.views.home'))
@@ -76,6 +78,7 @@ def home(request):
         { },
         context_instance=RequestContext(request))
 
+@login_required
 def friendrequests(request):
     user = request.user
     profile = Profile.objects.get(user=user)
@@ -125,6 +128,7 @@ def friendrequests(request):
         {'lucky_one':lucky_one, 'profile':profile,'my_requests':my_requests, 'requested_me':requested_me, 'msg':msg, 'msg_exists':msg_exists},
         context_instance=RequestContext(request))
    
+@login_required
 def questions(request):
     
     current_user = request.user
@@ -181,6 +185,7 @@ def questions(request):
         },
         context_instance=RequestContext(request))
 
+@login_required
 def answer(request):
     
     print "Response"
@@ -191,12 +196,12 @@ def answer(request):
     response = Responses(user=profile, qid=question, answer=y_or_n)
     response.save()
 
-    return redirect('home')
+    return redirect('questions')
 
     #return redirect('steam/questions.html', {}, context_instance=RequestContext(request))
 
 
-
+@login_required
 def vote(request):
     # potential_votes = Vote.objects.filter(uid=1)
     person = Profile.objects.filter(user=request.user)
@@ -227,6 +232,7 @@ def vote(request):
         'user1Questions':user1Questions,'user2Questions':user2Questions},
         context_instance=RequestContext(request))
 
+@login_required
 def process_like(request):
     user = request.user
     profile = Profile.objects.get(user=user)
@@ -249,7 +255,7 @@ def process_like(request):
 
         return redirect('/steam/friendrequests')
 
-
+@login_required
 def process_friend_accept(request):
     user = request.user
     profile = Profile.objects.get(user=user)
@@ -274,6 +280,7 @@ def process_friend_accept(request):
 
     return redirect('/steam/friendrequests')
 
+@login_required
 def process_friend_reject(request):
     user = request.user
     profile = Profile.objects.get(user=user)
@@ -292,6 +299,7 @@ def process_friend_reject(request):
 
     return redirect('/steam/friendrequests')
 
+@login_required
 def matches(request):
 
     matches_for_user_1 = Match.objects.filter(user1=request.user).exclude(accept1='y').exclude(accept1='n')
@@ -313,6 +321,7 @@ def matches(request):
         'final_matches_2' : final_matches_2},
         context_instance=RequestContext(request))
 
+@login_required
 def friends(request):
     user = request.user
     profile = Profile.objects.get(user=user)
@@ -326,6 +335,7 @@ def friends(request):
     return render_to_response(
         'steam/friends.html', {'friendless':friendless, 'all_friends':all_friends, 'all_friends2':all_friends2},RequestContext(request))
 
+@login_required
 def remove_friend(request):
     user = request.user
     friendship_id = request.POST.get('friendship')
@@ -334,6 +344,7 @@ def remove_friend(request):
 
     return redirect('/steam/friends')
 
+@login_required
 def go(request):
 
 
@@ -348,8 +359,8 @@ def go(request):
       
     return render_to_response('steam/matches.html',{ },context_instance=RequestContext(request))
 
+@login_required
 def vote_on_match(request):
-
 
    
     matchID = request.POST.get("match", "")
@@ -361,3 +372,56 @@ def vote_on_match(request):
     print 'new_vote',new_vote
       
     return render_to_response('steam/vote.html',{ },context_instance=RequestContext(request))
+
+@login_required
+def suggest_friends(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    
+    my_friends_list = find_my_friends(profile)
+
+    possible_friends = []
+    
+    for f in my_friends_list:
+        f_friends_list = find_my_friends(f)
+        if f not in my_friends_list:
+            possible_friends.append(f)
+
+    msg = ""
+
+    if len(possible_friends) == 0:
+        msg = "We couldn't find any friends to match you with."
+
+    return render_to_response(
+        "steam/suggest_friends.html",
+        {'possible_friends':possible_friends, 'msg':msg},
+        context_instance=RequestContext(request))
+
+@login_required
+def profile(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    
+    my_friends_list = find_my_friends(profile)
+
+    return render_to_response(
+        "steam/profile.html",
+        {'profile':profile, 'friends':my_friends_list},
+        context_instance=RequestContext(request))
+
+
+def find_my_friends(profile):
+    f1 = Friendship.objects.filter(friend1=profile)
+    f2 = Friendship.objects.filter(friend2=profile)
+
+    friends_list = []
+
+    for f in f1:
+        friend_to_add = f1.friend2
+        friends_list.append(friend_to_add)
+
+    for f in f2:
+        friend_to_add = f2.friend1
+        friends_list.append(friend_to_add)
+
+    return friends_list

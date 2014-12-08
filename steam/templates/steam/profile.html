@@ -1,0 +1,16 @@
+{% extends "steam/base.html" %}
+
+
+
+{% block content %}
+
+<h1>{{ profile.first_name }}'s Profile</h1>
+
+<h3>Personal Info</h3>
+<h5>Name: {{ profile.first_name }} {{ profile.last_name }}</h5>
+<h5>Year: {{ profile.year }}</h5>
+<h5>Email: {{ profile.email }}</h5>
+<h5>Preference: {{ profile.preference }}</h5>
+<h5>Gender: {{ profile.gender }}</h5>
+
+{% endblock %}
