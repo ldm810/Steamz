@@ -24,12 +24,10 @@ class Profile(models.Model):
     school = models.CharField(max_length=256)
     preference = models.CharField(max_length=1)
     gender = models.CharField(max_length=1)
-    voter_score = models.IntegerField()
     
     def create(cls, newuser):
         profile = cls(user=user,first_name=first_name, last_name=last_name,
-            year=year, email=email, preference=preference, gender=gender,
-            voter_score=voter_score)
+            year=year, email=email, preference=preference, gender=gender)
         return profile
     
 
