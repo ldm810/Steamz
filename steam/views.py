@@ -442,11 +442,11 @@ def find_my_friends(profile):
     friends_list = []
 
     for f in f1:
-        friend_to_add = f1.friend2
+        friend_to_add = f.friend2
         friends_list.append(friend_to_add)
 
     for f in f2:
-        friend_to_add = f2.friend1
+        friend_to_add = f.friend1
         friends_list.append(friend_to_add)
 
     return friends_list
