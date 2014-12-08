@@ -41,7 +41,7 @@ class RegistrationForm(UserCreationForm):
 
         new_person = Profile(user=user, first_name=user.first_name, 
         	last_name=user.last_name, year=user.year, email=user.email, 
-        	preference=user.preference, gender=user.gender,school=user.school)
+        	preference=user.preference, gender=user.gender,voter_score=0,school=user.school)
 
 
         if commit:
