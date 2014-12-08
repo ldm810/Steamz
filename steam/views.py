@@ -210,6 +210,10 @@ def vote(request):
     matchToVoteOn = []
     user1Questions = []
     user2Questions = []
+    no_matches = False
+    user1NoResponses = False
+    user2NoResponses = False
+    no_previous_votes  = False
     for m in matches:
        
         votes = Vote.objects.filter(match=m).filter(uid=person)
@@ -227,9 +231,19 @@ def vote(request):
     if (len(matchToVoteOn)!=0):
         user1Questions = Responses.objects.filter(user=matchToVoteOn[0].user1)
         user2Questions = Responses.objects.filter(user=matchToVoteOn[0].user2)
+        if (len(user1Questions) == 0):
+            user1NoResponses = True
+        if (len(user2Questions)==0):
+            user2NoResponses = True
+    else:
+        no_matches = True
+    if (len(previous_votes) == 0):
+        no_previous_votes = True
     return render_to_response('steam/vote.html',
         { 'match': matchToVoteOn, 'previous_votes':previous_votes, 
-        'user1Questions':user1Questions,'user2Questions':user2Questions},
+        'user1Questions':user1Questions,'user2Questions':user2Questions, 
+        'no_matches' : no_matches,'no_previous_votes':no_previous_votes,
+        'user1NoResponses':user1NoResponses,'user2NoResponses':user2NoResponses},
         context_instance=RequestContext(request))
 
 @login_required
@@ -307,6 +321,8 @@ def matches(request):
     print "matches",matches_for_user_1,matches_for_user_2
     final_matches_1 = []
     final_matches_2 = []
+    no_accepts = False
+    no_matches = False
     for m in matches_for_user_1:
         num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
         if (num_votes >= VOTES_THRESHOLD):
@@ -316,9 +332,19 @@ def matches(request):
         if (num_votes >= VOTES_THRESHOLD):
             final_matches_2.append(m)
         
+    accepted_for_user_1 = Match.objects.filter(user1=request.user).filter(accept1='y').filter(accept1='y')
+    accepted_for_user_2 = Match.objects.filter(user2=request.user).filter(accept2='y').filter(accept2='y')
+    if (len(accepted_for_user_2) == 0 and len(accepted_for_user_1)==0):
+        no_accepts = True
+    if (len(final_matches_1) == 0 and len(final_matches_2)==0):
+        no_matches = True
     return render_to_response('steam/matches.html',
         { 'final_matches_1' : final_matches_1,
-        'final_matches_2' : final_matches_2},
+        'final_matches_2' : final_matches_2,
+        'accepted_for_user_1':accepted_for_user_1,
+        'accepted_for_user_2':accepted_for_user_2,
+        'no_accepts':no_accepts,
+        'no_matches':no_matches},
         context_instance=RequestContext(request))
 
 @login_required

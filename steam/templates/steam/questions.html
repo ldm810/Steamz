@@ -3,15 +3,21 @@
 
 {% block content %}
 <p>
-You have answered the following questions:	
-{% for q in past_questions %}
+	You have answered the following questions:	</p>
+	{% for q in past_questions %}
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="well well-sm col-md-4">
+			{{q.qid.question_text}} <br>
+			You answered: {{q.answer}}
+		</div>
+	</div>
+</div>
 
-{{q.qid.question_text}} <br>
-You answered: {{q.answer}}
 <br>
 <br>
 {% endfor %}
-</p>
+
 
 
 {% if msg_exists %}
@@ -20,19 +26,27 @@ You answered: {{q.answer}}
 
 {% else %}
 
-<p>
+<p>Here is a new question: </p>
 
-Here is a new question:
-<form action="answer" method="post">
-	{% csrf_token %}
-	{{new_question.question_text}}:  
-	<input type="hidden" name="question" value={{new_question.qid}}>
-	Yes: <input type="radio" name="respond" value="Yes" />
-	No: <input type="radio" name="respond" value="No" />
-	<input type="submit" value="Submit">
-</form>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="well well-sm col-md-4">
+			<form action="answer" method="post">
+				{% csrf_token %}
 
-</p>
+
+				{{new_question.question_text}}:  
+				<input type="hidden" name="question" value={{new_question.qid}}>
+				Yes: <input type="radio" name="respond" value="Yes" />
+				No: <input type="radio" name="respond" value="No" />
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
 
 {% endif %}
 {% endblock %}

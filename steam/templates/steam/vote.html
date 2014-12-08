@@ -5,11 +5,13 @@
 <div class="row">
 	<h2 class="col-md-4">Previous Votes</h2>
 </div>
+{% if no_previous_votes %}
+	You have not voted before
+	{% endif %}
+{% for v in previous_votes %}
 <div class="row">
 	<div class="col-md-1"></div>
 	<div class="well well-sm col-md-4">
-		{% for v in previous_votes %}
-
 		Person 1 : {{v.match.user1.first_name}} {{v.match.user1.last_name}} <br>
 		Person 2 : {{v.match.user2.first_name}} {{v.match.user2.last_name}} <br>
 		You voted :
@@ -21,36 +23,61 @@
 		No
 		{% endif %} 
 		{% endif %}
-		{% endfor %}
 	</div>
 </div>
+{% endfor %}
+
 </div>
 <hr>
 <div class="row">
 	<h2 class="col-md-4">Vote on the Match Below!</h2>
+
+	
 </div>
+{% if no_matches %}
+	You have nothing to vote on =(
+	{% endif %}
 <div class="row">
 	{% for v in match %}
 	<div class="col-md-1"></div>
 	<div class="well well-sm col-md-4">
-		<h3>Person 1 </h3>
-		<h4>{{v.user1.first_name}} {{v.user1.last_name}} </h4><br>
+		<h3>Person 1 </h3> 
+		<h4>{{v.user1.first_name}} {{v.user1.last_name}} </h4>
+		{% if user1NoResponses  %}
+		
+		{% else %}
+		{% if user1NoResponses == False %}
+
 		{{v.user1.first_name}} answered these questions:
 		{% for question in user1Questions %}
 		<li>	{{question.qid.question_text}}  <b>{{question.answer}} </b></li>
 
 		{% endfor %}
+		{% endif %} 
+		{% endif %}
+
+		
 	</div>
 
 	<div class="col-md-1"></div>
 	<div class="well well-sm col-md-4">
 		<h3>Person 2 </h3>
-		<h4>{{v.user2.first_name}} {{v.user2.last_name}} </h4><br>
+		<h4>{{v.user2.first_name}} {{v.user2.last_name}} </h4>
+
+			{% if user2NoResponses  %}
+		
+		{% else %}
+		{% if user2NoResponses == False  %}
+
 		{{v.user2.first_name}} answered these questions:
 		{% for question in user2Questions %}
-		<li>	{{question.qid.question_text}}  <b>{{question.answer}}</b> </li>
+		<li>	{{question.qid.question_text}}  <b>{{question.answer}} </b></li>
 
 		{% endfor %}
+		{% endif %} 
+		{% endif %}
+
+		
 	</div>
 </div>
 <div class="row">

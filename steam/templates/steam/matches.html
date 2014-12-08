@@ -2,71 +2,106 @@
 
 
 {% block content %}
-<p>
-	<h1>Matches</h1>
-	
+<h2>Your Finalized Matches</h2>
+{% if no_accepts %}
+You have no finalized matches =(
+{% endif %}
 
-	{% for m in final_matches_1 %}
-	<div class="row">
-		<div class="col-md-1"></div>
-		<div class="well well-sm col-md-4">
-			You have been matched with {{m.user2.first_name}} {{m.user2.last_name}}
-			<form action="go" method="post">
-				{% csrf_token %}
-				Would you like to accept this match?
-				<div class="radio">
-					<label>
-
-						<input type="radio" name="accept1"  value="y" > Yes
-
-					</label>
-					<label>
-
-						<input type="radio" name="accept1"  value="n" > No
-
-					</label>
-				</div>
-				<input type="hidden" name="match" value={{m.id}}>
-				<input type="hidden" name="userPos" value=2>
-				<input type="submit" value="Submit"> 
-
-			</form>
-		</div>
+{% for m in accepted_for_user_1%}
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="well well-sm col-md-4">
+		You have been matched with {{m.user2.first_name}} {{m.user2.last_name}}<br>
+		Go ahead and send {{m.user2.first_name}} an  <a href="mailto:{{m.user2.email}}">email</a>  
+		to setup a coffee meeting!
 	</div>
+</div>
 </div>
 
 {% endfor %}
 
-	{% for m in final_matches_2 %}
-	<div class="row">
-		<div class="col-md-1"></div>
-		<div class="well well-sm col-md-4">
-			You have been matched with {{m.user1.first_name}} {{m.user1.last_name}}
-			<form action="go" method="post">
-				{% csrf_token %}
-				Would you like to accept this match?
-				<div class="radio">
-					<label>
 
-						<input type="radio" name="accept1"  value="y" > Yes
 
-					</label>
-					<label>
-
-						<input type="radio" name="accept1"  value="n" > No
-
-					</label>
-				</div>
-				<input type="hidden" name="match" value={{m.id}}>
-				<input type="hidden" name="userPos" value=2>
-				<input type="submit" value="Submit"> 
-			</form>
-		</div>
+{% for m in accepted_for_user_2%}
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="well well-sm col-md-4">
+		You have been matched with {{m.user1.first_name}} {{m.user1.last_name}}<br>
+		Go ahead and send {{m.user1.first_name}}  an <a href="mailto:{{m.user2.email}}">email</a>  
+		to setup a coffee meeting!
 	</div>
+</div>
 </div>
 
 {% endfor %}
-</p>
+
+
+<h2>Vote on Your Matches</h2>
+{% if no_matches %}
+You have no matches to vote on =(
+{% endif %}
+
+{% for m in final_matches_1 %}
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="well well-sm col-md-4">
+		You have been matched with {{m.user2.first_name}} {{m.user2.last_name}}
+		<form action="go" method="post">
+			{% csrf_token %}
+			Would you like to accept this match?
+			<div class="radio">
+				<label>
+
+					<input type="radio" name="accept1"  value="y" > Yes
+
+				</label>
+				<label>
+
+					<input type="radio" name="accept1"  value="n" > No
+
+				</label>
+			</div>
+			<input type="hidden" name="match" value={{m.id}}>
+			<input type="hidden" name="userPos" value=1>
+			<input type="submit" value="Submit"> 
+
+		</form>
+	</div>
+</div>
+</div>
+
+{% endfor %}
+
+{% for m in final_matches_2 %}
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="well well-sm col-md-4">
+		You have been matched with {{m.user1.first_name}} {{m.user1.last_name}}
+		<form action="go" method="post">
+			{% csrf_token %}
+			Would you like to accept this match?
+			<div class="radio">
+				<label>
+
+					<input type="radio" name="accept1"  value="y" > Yes
+
+				</label>
+				<label>
+
+					<input type="radio" name="accept1"  value="n" > No
+
+				</label>
+			</div>
+			<input type="hidden" name="match" value={{m.id}}>
+			<input type="hidden" name="userPos" value=2>
+			<input type="submit" value="Submit"> 
+		</form>
+	</div>
+</div>
+</div>
+
+{% endfor %}
+
 {% endblock %}
 
 
