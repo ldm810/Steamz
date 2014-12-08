@@ -417,13 +417,19 @@ def suggest_friends(request):
     
     for f in my_friends_list:
         f_friends_list = find_my_friends(f)
-        if f not in my_friends_list:
-            possible_friends.append(f)
+
+        for fr in f_friends_list:
+            if fr not in my_friends_list:
+                possible_friends.append(fr)
+
+    possible_friends = set(possible_friends)
 
     msg = ""
 
     if len(possible_friends) == 0:
         msg = "We couldn't find any friends to match you with."
+
+    print possible_friends
 
     return render_to_response(
         "steam/suggest_friends.html",
