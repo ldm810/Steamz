@@ -4,6 +4,7 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
 <div class="container">
 <h2>Select an item below to get started</h2>
 	<ul>
@@ -18,6 +19,20 @@
 
 
 	</ul>
+
+{% else %}
+<center>
+<h2>Welcome to Steamz!</h2>
+<h3>Vote. Match. Love.</h3>
+</center>
+<center>
+<h3><a href="{% url 'steam.views.login'  %}">Login</a></h3>
+
+<h3>or</h3>
+
+<h3><a href="{% url 'steam.views.register'  %}">Register</a></h3>
+</center>
+{% endif %}
 
 
 </div>

@@ -39,7 +39,7 @@
         <li><a href="{% url 'steam.views.suggest_friends'  %}">Suggested Friends</a></li>
 
         <li></li>
-        <li>{% if user.is_authenticated %}<a href="{% url 'steam.views.profile'  %}">Welcome,  {{user|user_greeting_name}}!</a>{%else %}<a href="#">Welcome!</a> {% endif %}
+        <li>{% if user.is_authenticated %}<a href="{% url 'steam.views.profile'  %}">Welcome,  {{user|user_greeting_name}}!</a>{% endif %}
         </li>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
