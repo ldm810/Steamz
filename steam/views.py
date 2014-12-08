@@ -383,7 +383,7 @@ def go(request):
     if (userPos=="2"):
         match = Match.objects.filter(id=matchID).update(accept2=response)
       
-    return render_to_response('steam/matches.html',{ },context_instance=RequestContext(request))
+    return redirect('/steam/matches')
 
 @login_required
 def vote_on_match(request):
