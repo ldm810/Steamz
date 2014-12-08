@@ -395,9 +395,8 @@ def vote_on_match(request):
     match = Match.objects.filter(id=matchID)[0]
     new_vote = Vote(y_or_n=vote,match=match,uid=uid)
     new_vote.save()
-    print 'new_vote',new_vote
-      
-    return render_to_response('steam/vote.html',{ },context_instance=RequestContext(request))
+    return redirect('/steam/vote')
+    
 
 @login_required
 def suggest_friends(request):
