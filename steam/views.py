@@ -75,7 +75,7 @@ def logout(request):
 
 def home(request):
     return render_to_response('steam/home.html',
-        { },
+        {'user':request.user},
         context_instance=RequestContext(request))
 
 @login_required
