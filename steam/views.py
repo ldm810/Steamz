@@ -326,11 +326,19 @@ def matches(request):
     for m in matches_for_user_1:
         num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
         if (num_votes >= VOTES_THRESHOLD):
-            final_matches_1.append(m)
+            responses = Responses.objects.filter(user=m.user2)
+            has_no_responses = True
+            if (len(responses) == 0):
+                has_no_responses = False
+            final_matches_1.append([m,responses,has_no_responses])
     for m in matches_for_user_2:
         num_votes = Vote.objects.filter(match=m).filter(y_or_n='y').count()
         if (num_votes >= VOTES_THRESHOLD):
-            final_matches_2.append(m)
+            responses = Responses.objects.filter(user=m.user1)
+            has_no_responses = True
+            if (len(responses) == 0):
+                has_no_responses = False
+            final_matches_2.append([m,responses,has_no_responses])
         
     accepted_for_user_1 = Match.objects.filter(user1=request.user).filter(accept1='y').filter(accept2='y')
     accepted_for_user_2 = Match.objects.filter(user2=request.user).filter(accept1='y').filter(accept2='y')

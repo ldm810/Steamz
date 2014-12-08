@@ -45,7 +45,14 @@ You have no matches to vote on =(
 <div class="row">
 	<div class="col-md-1"></div>
 	<div class="well well-sm col-md-4">
-		You have been matched with {{m.user2.first_name}} {{m.user2.last_name}}
+		You have been matched with {{m.0.user2.first_name}} {{m.0.user2.last_name}}<br>
+		{% if m.2 %}
+		{{m.0.user2.first_name}} answered the following questions:
+		{% endif %}
+		{% for question in m.1 %}
+
+		<li>{{question.qid.question_text}}  : <b>{{question.answer}}</b></li>
+		{% endfor %}
 		<form action="go" method="post">
 			{% csrf_token %}
 			Would you like to accept this match?
@@ -76,7 +83,14 @@ You have no matches to vote on =(
 <div class="row">
 	<div class="col-md-1"></div>
 	<div class="well well-sm col-md-4">
-		You have been matched with {{m.user1.first_name}} {{m.user1.last_name}}
+		You have been matched with {{m.0.user1.first_name}} {{m.0.user1.last_name}}<br>
+		{% if m.2 %}
+		{{m.0.user1.first_name}} answered the following questions:
+		{% endif %}
+		{% for question in m.1 %}
+
+		<li>{{question.qid.question_text}}  : <b>{{question.answer}}</b></li>
+		{% endfor %}
 		<form action="go" method="post">
 			{% csrf_token %}
 			Would you like to accept this match?
